@@ -81,3 +81,46 @@ input { width: 80%; padding: 10px; border-radius: 12px; border: none; background
 .vision-grid::-webkit-scrollbar {
     display: none;
 }
+#dashboard-content {
+    transition: all 0.3s ease-in-out;
+}
+
+.feature-grid {
+    transition: margin 0.3s ease;
+}
+
+/* Ensure feature tabs take up the full available space properly */
+.glass-inner {
+    margin-top: 0; /* Remove top margin when header is hidden */
+    height: 100%;
+}
+.breathe-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+}
+
+.breathe-circle {
+    width: 100px;
+    height: 100px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+    transition: all 4s ease-in-out; /* Smooth expansion */
+    margin-bottom: 30px;
+}
+
+/* When this class is added, the bubble grows */
+.breathe-expand {
+    transform: scale(2.2);
+    background: rgba(255, 255, 255, 0.4);
+}
+
+#breathe-text {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #5d4037;
+    height: 25px;
+}
