@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Sanctuary</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="app-container">
+        <section id="dashboard" class="tab-content active">
+            <header>
+                <h1>today's goals ✨</h1>
+                <p id="date-display"></p>
+            </header>
+
+            <div class="wellness-card">
+                <small>DAILY AFFIRMATION</small>
+                <p id="affirmation-text">"Loading magic..."</p>
+            </div>
+
+            <div class="mood-section">
+                <p>how are you feeling?</p>
+                <div class="mood-options">
+                    <button onclick="setMood('🌸')">🌸</button>
+                    <button onclick="setMood('☁️')">☁️</button>
+                    <button onclick="setMood('🌙')">🌙</button>
+                    <button onclick="setMood('✨')">✨</button>
+                </div>
+            </div>
+
+            <div class="input-section">
+                <input type="text" id="todo-input" placeholder="Add a task..." maxlength="40">
+                <button id="add-btn">+</button>
+            </div>
+
+            <ul id="todo-list"></ul>
+
+            <div class="feature-grid">
+                <div class="feature-item" onclick="showTab('focus-tab')">
+                    <span>🐰</span>
+                    <small>Study Bunny</small>
+                </div>
+                </div>
+
+            <div class="footer-icons">
+                <span>🎀</span>
+                <span>🧸</span>
+                <span>🍓</span>
+            </div>
+        </section>
+
+        <section id="focus-tab" class="tab-content">
+            <button class="back-btn" onclick="showTab('dashboard')">← Back to Home</button>
+            <div class="glass-inner">
+                <h2 style="color: #ff8fab;">focus room 🐰</h2>
+                <div class="timer-display">
+                    <span id="timer-clock">25:00</span>
+                </div>
+                <div class="timer-controls">
+                    <button id="start-timer" class="main-btn">Start</button>
+                    <button id="reset-timer" class="secondary-btn">Reset</button>
+                </div>
+                <p class="timer-subtext">Time to focus, Ananya! ✨</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
