@@ -1,24 +1,21 @@
-// --- STATE ---
-let wNow = parseInt(localStorage.getItem('wNow')) || 0;
-let fNow = parseInt(localStorage.getItem('fNow')) || 0;
-let wGoal = parseInt(localStorage.getItem('wGoal')) || 8;
-let fGoal = parseInt(localStorage.getItem('fGoal')) || 10000;
-let subjects = JSON.parse(localStorage.getItem('eceSubs')) || [];
-let alarmTime = null;
-let timerId = null, timeLeft = 25 * 60;
+// DATA PERSISTENCE
+let wNow = parseInt(localStorage.getItem('w_now')) || 0;
+let fNow = parseInt(localStorage.getItem('f_now')) || 0;
+let jar = JSON.parse(localStorage.getItem('jar_notes')) || [];
+let alarmT = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Setup Date
-    const options = { weekday: 'long', month: 'long', day: 'numeric' };
-    document.getElementById('date-display').innerText = new Date().toLocaleDateString(undefined, options);
-    
-    // 2. Tab Navigation
+    // 1. Initial UI Setup
+    updateUI();
+    document.getElementById('date-display').innerText = new Date().toLocaleDateString(undefined, {weekday: 'long', month: 'long', day: 'numeric'});
+
+    // 2. Navigation Logic
     document.querySelectorAll('.feature-item').forEach(item => {
         item.addEventListener('click', () => {
-            const id = item.getAttribute('data-target');
+            const target = item.getAttribute('data-tab');
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            document.getElementById('main-header').style.display = (id === 'dashboard') ? 'block' : 'none';
+            document.getElementById(target).classList.add('active');
+            document.getElementById('main-header').style.display = 'none';
         });
     });
 
@@ -32,63 +29,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 3. Water Logic
-    document.getElementById('w-add').addEventListener('click', () => { wNow++; save('wNow', wNow); updateUI(); });
-    document.getElementById('w-reset').addEventListener('click', () => { wNow = 0; save('wNow', 0); updateUI(); });
-    document.getElementById('w-goal').addEventListener('change', (e) => { wGoal = e.target.value; save('wGoal', wGoal); updateUI(); });
+    document.getElementById('w-add').onclick = () => { wNow++; localStorage.setItem('w_now', wNow); updateUI(); };
+    document.getElementById('w-reset').onclick = () => { wNow = 0; localStorage.setItem('w_now', 0); updateUI(); };
 
     // 4. Fitness Logic
-    document.getElementById('f-add').addEventListener('click', () => { fNow += 1000; save('fNow', fNow); updateUI(); });
-    document.getElementById('f-reset').addEventListener('click', () => { fNow = 0; save('fNow', 0); updateUI(); });
-    document.getElementById('f-goal').addEventListener('change', (e) => { fGoal = e.target.value; save('fGoal', fGoal); updateUI(); });
+    document.getElementById('f-add').onclick = () => { fNow += 1000; localStorage.setItem('f_now', fNow); updateUI(); };
+    document.getElementById('f-reset').onclick = () => { fNow = 0; localStorage.setItem('f_now', 0); updateUI(); };
 
-    // 5. Alarm logic
-    document.getElementById('al-set').addEventListener('click', () => {
-        alarmTime = document.getElementById('al-time').value;
-        document.getElementById('al-status').innerText = `🔔 Reminder set for ${alarmTime}`;
-        alert("Alarm active! ✨");
+    // 5. Jar Logic
+    document.getElementById('jar-add').onclick = () => {
+        const val = document.getElementById('jar-input').value;
+        if(val) { jar.push(val); localStorage.setItem('jar_notes', JSON.stringify(jar)); renderJar(); document.getElementById('jar-input').value = ""; }
+    };
+
+    // 6. Mood Logic
+    document.querySelectorAll('.m-opt').forEach(btn => {
+        btn.onclick = () => {
+            const color = btn.getAttribute('data-color');
+            document.body.style.background = `linear-gradient(135deg, ${color} 0%, #e1f5fe 100%)`;
+            document.getElementById('mood-txt').innerText = "Vibe updated! ✨";
+        };
     });
 
-    // 6. Diary Lock
-    document.getElementById('d-unlock').addEventListener('click', () => {
-        if(document.getElementById('d-pin').value === "1234") {
-            document.getElementById('diary-lock').style.display = 'none';
-            document.getElementById('diary-open').style.display = 'block';
-            document.getElementById('d-area').value = localStorage.getItem('dText') || "";
-        } else alert("Wrong PIN!");
-    });
-    document.getElementById('d-save').addEventListener('click', () => { save('dText', document.getElementById('d-area').value); alert("Secret Saved! 🔒"); });
+    // 7. Alarm logic
+    document.getElementById('al-set').onclick = () => { alarmT = document.getElementById('al-time').value; alert("Alarm Set! 🔔"); };
 
-    // 7. Degree Tracker
-    document.getElementById('deg-add').addEventListener('click', () => {
-        const val = document.getElementById('deg-in').value;
-        if(val) { subjects.push({n: val, d: false}); save('eceSubs', subjects); renderDeg(); document.getElementById('deg-in').value = ""; }
-    });
-
-    updateUI();
+    renderJar();
 });
 
 function updateUI() {
     document.getElementById('w-now').innerText = wNow;
-    document.getElementById('w-goal').value = wGoal;
     document.getElementById('f-now').innerText = fNow.toLocaleString();
-    document.getElementById('f-goal').value = fGoal;
-    document.getElementById('f-bar').style.width = Math.min((fNow/fGoal)*100, 100) + "%";
+    const fGoal = parseInt(document.getElementById('f-goal').value);
+    document.getElementById('f-bar').style.width = Math.min((fNow / fGoal) * 100, 100) + "%";
 }
 
-function renderDeg() {
-    const list = document.getElementById('deg-list');
-    list.innerHTML = subjects.map((s, i) => `<li style="background:white; padding:10px; border-radius:10px; list-style:none; margin:5px; cursor:pointer; opacity:${s.d?0.5:1}" onclick="toggleDeg(${i})">${s.n} ${s.d ? '✅' : '⏳'}</li>`).join('');
-    const done = subjects.filter(s => s.d).length;
-    document.getElementById('deg-bar').style.width = subjects.length ? (done/subjects.length)*100 + "%" : "0%";
+function renderJar() {
+    const g = document.getElementById('jar-grid');
+    if(!g) return;
+    g.innerHTML = jar.map(n => `<div class="gratitude-note" style="background:#fff9c4; padding:8px; margin:5px; border-radius:5px; font-size:0.7rem;">${n}</div>`).join('');
 }
-window.toggleDeg = (i) => { subjects[i].d = !subjects[i].d; save('eceSubs', subjects); renderDeg(); };
-
-function save(k, v) { localStorage.setItem(k, typeof v === 'object' ? JSON.stringify(v) : v); }
 
 setInterval(() => {
-    const now = new Date();
-    const t = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit', hour12: false});
-    document.getElementById('mini-clock').innerText = t;
+    const t = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit', hour12: false});
+    if(document.getElementById('mini-clock')) document.getElementById('mini-clock').innerText = t;
     if(document.getElementById('big-clock')) document.getElementById('big-clock').innerText = t;
-    if(alarmTime === t.substring(0,5)) { alert("⏰ REMINDER!"); alarmTime = null; }
+    if(alarmT === t.substring(0,5)) { alert("⏰ REMINDER!"); alarmT = null; }
 }, 1000);
