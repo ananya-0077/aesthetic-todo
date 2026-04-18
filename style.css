@@ -119,3 +119,23 @@ input { width: 70%; padding: 12px; border-radius: 15px; border: none; background
 
 #plant-display { transition: transform 0.3s; }
 .grow-anim { transform: scale(1.2); }
+/* Diary Styling */
+#diary-input {
+    width: 100%;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px dashed #ba68c8;
+    border-radius: 20px;
+    padding: 15px;
+    font-family: 'Quicksand', sans-serif;
+    color: #5d4037;
+    resize: none;
+    margin-bottom: 15px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+#diary-pin {
+    letter-spacing: 5px;
+    font-size: 1.2rem;
+}

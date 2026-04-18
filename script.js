@@ -174,3 +174,30 @@ function setMood(emoji) {
 input.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') addBtn.click();
 });
+
+// --- Feature 3: Secret Diary Logic ---
+const diaryPIN = "1234"; // 🎀 You can change this to any 4 digits!
+
+function unlockDiary() {
+    const enteredPin = document.getElementById('diary-pin').value;
+    if (enteredPin === diaryPIN) {
+        document.getElementById('diary-lock').style.display = 'none';
+        document.getElementById('diary-open').style.display = 'block';
+        // Load existing note
+        document.getElementById('diary-input').value = localStorage.getItem('secretNote') || "";
+        document.getElementById('diary-pin').value = ""; // clear for next time
+    } else {
+        alert("Oops! Wrong PIN. 🎀");
+    }
+}
+
+function saveDiary() {
+    const note = document.getElementById('diary-input').value;
+    localStorage.setItem('secretNote', note);
+    alert("Note saved safely in your sanctuary! ✨");
+}
+
+function lockDiary() {
+    document.getElementById('diary-lock').style.display = 'block';
+    document.getElementById('diary-open').style.display = 'none';
+}

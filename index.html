@@ -94,12 +94,26 @@
         </section>
         
         <section id="journal-tab" class="tab-content">
-            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
-            <div class="glass-inner">
-                <h2>secret diary 🔒</h2>
-                <p>Coming soon...</p>
+           <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+           <div class="glass-inner">
+                <h2 style="color: #ba68c8;">secret diary 🔒</h2>
+        
+                <div id="diary-lock">
+                   <p style="font-size: 0.8rem; margin-bottom: 15px;">Enter your secret PIN to unlock</p>
+                   <input type="password" id="diary-pin" placeholder="****" style="text-align: center; width: 100px; margin-bottom: 15px;">
+                   <br>
+                   <button class="main-btn" style="background: #ba68c8;" onclick="unlockDiary()">Unlock</button>
+                </div>
+
+                <div id="diary-open" style="display: none; width: 100%;">
+                    <textarea id="diary-input" placeholder="How was your day, Ananya?..." maxlength="500"></textarea>
+                    <div class="controls">
+                    <button class="main-btn" style="background: #ba68c8;" onclick="saveDiary()">Save Note</button>
+                    <button class="secondary-btn" onclick="lockDiary()">Lock</button>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
     </div>
 
     <script src="script.js"></script>
