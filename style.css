@@ -7,23 +7,23 @@
 
 body { margin: 0; font-family: 'Quicksand', sans-serif; background: var(--bg-gradient); height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; }
 
-.app-container { background: var(--glass); backdrop-filter: blur(25px); border-radius: 40px; width: 90%; max-width: 400px; height: 85vh; padding: 25px; text-align: center; overflow-y: auto; border: 1px solid white; }
+.app-container { background: var(--glass); backdrop-filter: blur(25px); border-radius: 40px; width: 90%; max-width: 400px; height: 85vh; padding: 25px; text-align: center; overflow-y: auto; border: 1px solid white; display: flex; flex-direction: column; align-items: center; }
 
 .tab-content { display: none; width: 100%; }
-.tab-content.active { display: block !important; }
+.tab-content.active { display: flex !important; flex-direction: column; align-items: center; }
 
-/* FIX: Ensure content is visible and centered */
-.glass-inner { 
-    display: flex; flex-direction: column; align-items: center; justify-content: center; 
-    min-height: 450px; width: 100%; padding: 10px; box-sizing: border-box; 
-}
+.glass-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; min-height: 400px; }
 
-textarea { width: 80%; height: 150px; border-radius: 15px; border: 1px solid white; padding: 10px; margin: 10px 0; background: rgba(255,255,255,0.5); font-family: inherit; }
+textarea { width: 85%; height: 120px; border-radius: 15px; border: 1px solid white; padding: 10px; margin: 15px 0; background: rgba(255,255,255,0.5); font-family: inherit; }
 
-.display-circle { width: 110px; height: 110px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border: 3px solid var(--accent); margin-bottom: 20px; }
+.feature-grid-9, .feature-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; margin-top: 15px; }
+.feature-item { background: white; border-radius: 15px; padding: 12px 5px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+.feature-item span { font-size: 1.4rem; display: block; }
 
-.feature-grid-9, .feature-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-.feature-item { background: white; border-radius: 15px; padding: 10px 5px; cursor: pointer; }
+.display-circle { width: 110px; height: 110px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border: 3px solid var(--accent); margin-bottom: 20px; }
 
 .main-btn { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 15px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-.back-btn { background: none; border: none; color: var(--accent); font-weight: bold; cursor: pointer; margin-bottom: 5px; }
+.back-btn { background: none; border: none; color: var(--accent); font-weight: bold; cursor: pointer; margin-bottom: 15px; width: 100%; text-align: center; }
+
+.alarm-mini { background: white; padding: 10px; border-radius: 15px; margin: 15px 0; font-weight: bold; cursor: pointer; }
+.full-pill-input { width: 80%; padding: 10px; border-radius: 20px; border: none; margin: 5px 0; text-align: center; }

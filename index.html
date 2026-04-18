@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ananya's Lifestyle Hub</title>
+    <title>Ananya's Life Hub</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -20,22 +20,24 @@
         </header>
 
         <section id="dashboard" class="tab-content active">
-            <div id="dashboard-content">
-                <div class="wellness-card">
-                    <div id="badge-display" class="badges-row"></div>
-                    <p id="affirmation-text">"Everything is falling into place. 🎀"</p>
-                </div>
-                <div class="alarm-mini" id="mini-alarm-trigger">
-                    <span id="mini-clock">00:00:00</span> 🔔
-                </div>
-                <div class="pill-input-section">
-                    <input type="text" id="todo-input" placeholder="Quick tasks...">
-                    <button id="add-todo-btn">+</button>
-                </div>
-                <ul id="todo-list" class="task-grid"></ul>
+            <div class="wellness-card">
+                <div id="badge-display" class="badges-row"></div>
+                <p id="affirmation-text">"Everything is falling into place. 🎀"</p>
             </div>
 
-            <h3 class="grid-label">WELLNESS & LIFE</h3>
+            <div class="alarm-mini" id="mini-alarm-trigger">
+                <span id="mini-clock">00:00:00</span> 🔔
+            </div>
+
+            <div class="big-three-container">
+                <small>DAILY BIG 3 ⚡</small>
+                <div class="big-three-inputs">
+                    <input type="text" id="big1" placeholder="1. High Priority">
+                    <input type="text" id="big2" placeholder="2. Important">
+                    <input type="text" id="big3" placeholder="3. Must do">
+                </div>
+            </div>
+
             <div class="feature-grid-9">
                 <div class="feature-item" data-tab="focus-tab"><span>🐰</span><small>Focus</small></div>
                 <div class="feature-item" data-tab="water-tab"><span>🌱</span><small>Water</small></div>
@@ -51,7 +53,7 @@
             <h3 class="grid-label">STUDIO & STUDY</h3>
             <div class="feature-grid-3">
                 <div class="feature-item" data-tab="resin-tab"><span>✨</span><small>Orders</small></div>
-                <div class="feature-item" data-tab="alarm-tab"><span>⏰</span><small>Remind</small></div>
+                <div class="feature-item" data-tab="alarm-tab"><span>⏰</span><small>Alarm</small></div>
                 <div class="feature-item" data-tab="degree-tab"><span>🎓</span><small>Degree</small></div>
             </div>
         </section>
@@ -64,32 +66,44 @@
 
         <section id="sleep-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner">
             <h2>Sleep Log ☁️</h2>
-            <input type="number" id="sleep-input" class="inline-input" placeholder="Hrs">
-            <textarea id="dream-input" placeholder="Dreams..."></textarea>
+            <div class="stats-group">
+                <p>Hours: <input type="number" id="sleep-hrs" class="inline-input-sm" placeholder="0"></p>
+            </div>
+            <textarea id="dream-input" placeholder="Any dreams tonight?"></textarea>
             <button class="main-btn" id="save-sleep-btn">Log Night</button>
         </div></section>
 
         <section id="journal-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner">
             <h2>Private Diary 🔒</h2>
             <div id="diary-lock"><input type="password" id="diary-pin" placeholder="PIN (1234)"><button class="main-btn" id="unlock-btn">Unlock</button></div>
-            <div id="diary-box" style="display:none; width:100%;"><textarea id="diary-text"></textarea><button class="main-btn" id="save-diary-btn">Save</button></div>
+            <div id="diary-editor" style="display:none; width:100%;"><textarea id="diary-text"></textarea><button class="main-btn" id="save-diary-btn">Save Secret</button></div>
         </div></section>
 
         <section id="alarm-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner">
             <h2>Reminders ⏰</h2>
             <div class="display-circle" id="big-clock">00:00:00</div>
-            <input type="time" id="alarm-time"><input type="text" id="alarm-note" placeholder="Note...">
-            <button class="main-btn" id="set-alarm-btn">Set</button>
-        </div></section>
+            <div class="reminder-form">
+                <input type="time" id="alarm-time-val" class="full-pill-input">
+                <input type="text" id="alarm-msg-val" placeholder="Task Name" class="full-pill-input">
+                <button class="main-btn" id="set-alarm-btn">Set Reminder</button>
+            </div>
+        </section>
 
         <section id="degree-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner">
             <h2>ECE Tracker 🎓</h2>
             <div class="progress-container"><div id="degree-bar" class="progress-bar"></div></div>
-            <div class="pill-input-section"><input type="text" id="sub-input"><button id="add-sub-btn">+</button></div>
+            <div class="pill-input-section"><input type="text" id="sub-input" placeholder="Lab name..."><button id="add-sub-btn">+</button></div>
             <ul id="sub-list" class="task-grid"></ul>
         </div></section>
 
-        </div>
+        <section id="focus-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Focus 🐰</h2><div class="display-circle" id="focus-clock">25:00</div><button class="main-btn" id="focus-start">Start</button></div></section>
+        <section id="gratitude-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Jar 🏺</h2><div id="jar-display" class="notes-container"></div></div></section>
+        <section id="vision-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Vision 🖼️</h2></div></section>
+        <section id="breathe-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Breathe 🌬️</h2><div class="breathe-circle"></div></div></section>
+        <section id="fitness-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Fitness 👟</h2></div></section>
+        <section id="mood-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Mood 🎨</h2></div></section>
+        <section id="resin-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Orders ✨</h2></div></section>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
