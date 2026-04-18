@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ananya's Life Hub</title>
+    <title>Ananya's Lifestyle Hub</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -24,6 +24,10 @@
                 <div class="wellness-card">
                     <div id="badge-display" class="badges-row"></div>
                     <p id="affirmation-text">"Everything is falling into place. 🎀"</p>
+                </div>
+
+                <div class="alarm-mini" onclick="showTab('alarm-tab')">
+                    <span id="mini-clock">00:00:00</span> 🔔
                 </div>
 
                 <div class="big-three-container">
@@ -63,49 +67,11 @@
                 <div class="feature-item" onclick="showTab('mood-tab')"><span>🎨</span><small>Mood</small></div>
             </div>
 
-            <h3 class="grid-label">GLISSARA STUDIO & ECE</h3>
+            <h3 class="grid-label">STUDIO & STUDY</h3>
             <div class="feature-grid-3">
                 <div class="feature-item" onclick="showTab('resin-tab')"><span>✨</span><small>Orders</small></div>
-                <div class="feature-item" onclick="showTab('baking-tab')"><span>🧁</span><small>Recipes</small></div>
+                <div class="feature-item" onclick="showTab('alarm-tab')"><span>⏰</span><small>Alarm</small></div>
                 <div class="feature-item" onclick="showTab('degree-tab')"><span>🎓</span><small>Degree</small></div>
-            </div>
-        </section>
-
-        <section id="gratitude-tab" class="tab-content">
-            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
-            <div class="glass-inner">
-                <div class="jar-visual">🏺</div>
-                <h2>Gratitude Jar</h2>
-                <div class="pill-input-section">
-                    <input type="text" id="gratitude-input" placeholder="I'm grateful for...">
-                    <button onclick="addGratitude()" class="add-note-btn">+</button>
-                </div>
-                <div id="jar-notes-display" class="notes-container"></div>
-            </div>
-        </section>
-
-        <section id="vision-tab" class="tab-content">
-            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
-            <div class="glass-inner">
-                <h2>Vision Board 🖼️</h2>
-                <div class="pill-input-section">
-                    <input type="text" id="vision-url" placeholder="Paste image link...">
-                    <button class="main-btn" onclick="addImage()">Add</button>
-                </div>
-                <div id="vision-board-display" class="photo-masonry"></div>
-            </div>
-        </section>
-
-        <section id="resin-tab" class="tab-content">
-            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
-            <div class="glass-inner">
-                <h2>Resin Orders 🎨</h2>
-                <div class="pill-input-section">
-                    <input type="text" id="order-name" placeholder="Customer">
-                    <input type="text" id="order-item" placeholder="Item">
-                    <button class="main-btn" onclick="addOrder()">+</button>
-                </div>
-                <ul id="order-list" class="order-grid"></ul>
             </div>
         </section>
 
@@ -113,8 +79,10 @@
             <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
             <div class="glass-inner">
                 <div class="display-circle">🌱</div>
-                <p>Target: <input type="number" id="water-goal-input" class="inline-input" onchange="updateWaterGoal()"> glasses</p>
-                <p>Current: <span id="water-count">0</span></p>
+                <div class="stats-group">
+                    <p>Target: <input type="number" id="water-goal-input" class="inline-input" onchange="updateWaterGoal()"> glasses</p>
+                    <p>Current: <span id="water-count">0</span></p>
+                </div>
                 <button class="main-btn" onclick="addWater()">Drink 💧</button>
             </div>
         </section>
@@ -124,8 +92,47 @@
             <div class="glass-inner">
                 <h2>Fitness 👟</h2>
                 <div class="progress-container"><div id="step-progress" class="progress-bar"></div></div>
-                <p><span id="current-steps">0</span> / <input type="number" id="step-goal-input" class="inline-input" onchange="updateStepGoal()"> steps</p>
+                <div class="stats-group">
+                    <p><span id="current-steps">0</span> / <input type="number" id="step-goal-input" class="inline-input" onchange="updateStepGoal()"> steps</p>
+                </div>
                 <button class="main-btn" onclick="addSteps()">Add 1000 Steps</button>
+            </div>
+        </section>
+
+        <section id="focus-tab" class="tab-content">
+            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+            <div class="glass-inner">
+                <h2>Focus 🐰</h2>
+                <div class="display-circle"><span id="timer-clock">25:00</span></div>
+                <div class="controls-row">
+                    <button id="start-timer" class="main-btn">Start</button>
+                    <button id="reset-timer" class="secondary-btn">Reset</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="breathe-tab" class="tab-content">
+            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+            <div class="glass-inner">
+                <h2>Breathe 🌬️</h2>
+                <div class="breathe-circle"></div>
+                <p id="breathe-text">Ready?</p>
+                <button class="main-btn" id="breathe-btn" onclick="startBreathing()">Start</button>
+            </div>
+        </section>
+
+        <section id="journal-tab" class="tab-content">
+            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+            <div class="glass-inner">
+                <h2>Private Diary 🔒</h2>
+                <div id="diary-lock-screen">
+                    <input type="password" id="diary-pin" placeholder="Enter PIN (1234)" class="inline-input" style="width: 150px; margin-bottom: 10px;">
+                    <button class="main-btn" onclick="unlockDiary()">Unlock</button>
+                </div>
+                <div id="diary-editor" style="display:none; width: 100%;">
+                    <textarea id="diary-content" placeholder="Dear Diary..."></textarea>
+                    <button class="main-btn" onclick="saveDiary()">Save Secret</button>
+                </div>
             </div>
         </section>
 
@@ -133,17 +140,44 @@
             <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
             <div class="glass-inner">
                 <h2>Sleep Log ☁️</h2>
-                <textarea id="dream-input" placeholder="Dream details..."></textarea>
-                <button class="main-btn" onclick="saveSleep()">Log Sleep</button>
+                <div class="stats-group">
+                    <p>Hours Slept: <input type="number" id="sleep-hours" class="inline-input" placeholder="0"></p>
+                </div>
+                <textarea id="dream-input" placeholder="Describe your dreams..."></textarea>
+                <button class="main-btn" onclick="saveSleep()">Log Night</button>
             </div>
         </section>
-        
-        <section id="focus-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Focus 🐰</h2><div class="display-circle">25:00</div></div></section>
-        <section id="breathe-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Breathe 🌬️</h2><div class="breathe-circle"></div></div></section>
-        <section id="journal-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Diary 🔒</h2><textarea></textarea></div></section>
-        <section id="mood-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Mood 🎨</h2><p>Pink: Happy | Blue: Tired</p></div></section>
-        <section id="baking-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Recipes 🧁</h2><p>No-Sugar Bliss</p></div></section>
-        <section id="degree-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Degree 🎓</h2><p>ECE Tracker</p></div></section>
+
+        <section id="degree-tab" class="tab-content">
+            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+            <div class="glass-inner">
+                <h2>Degree Progress 🎓</h2>
+                <div class="progress-container"><div id="degree-progress-bar" class="progress-bar"></div></div>
+                <p id="progress-percent" style="margin-bottom: 15px;">0% Completed</p>
+                <div class="pill-input-section"><input type="text" id="subject-input" placeholder="New Lab/Subject..."><button onclick="addSubject()">+</button></div>
+                <ul id="subject-list" class="task-grid" style="width: 100%;"></ul>
+            </div>
+        </section>
+
+        <section id="alarm-tab" class="tab-content">
+            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+            <div class="glass-inner">
+                <h2>Reminders ⏰</h2>
+                <div class="display-circle" id="big-clock">00:00:00</div>
+                <div class="stats-group">
+                    <input type="time" id="alarm-time-input" class="inline-input" style="width: 120px; margin-bottom: 10px;">
+                    <input type="text" id="alarm-note" placeholder="What should I remind you?" class="inline-input" style="width: 80%;">
+                </div>
+                <button class="main-btn" onclick="setAlarm()">Set Alarm</button>
+                <p id="alarm-msg" style="margin-top: 10px; font-size: 0.8rem;"></p>
+            </div>
+        </section>
+
+        <section id="gratitude-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><div class="jar-visual">🏺</div><div class="pill-input-section"><input type="text" id="gratitude-input" placeholder="I'm grateful for..."><button onclick="addGratitude()">+</button></div><div id="jar-notes-display" class="notes-container"></div></div></section>
+        <section id="vision-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Vision Board</h2><div class="pill-input-section"><input type="text" id="vision-url" placeholder="Image link..."><button class="main-btn" onclick="addImage()">Add</button></div><div id="vision-board-display" class="photo-masonry"></div></div></section>
+        <section id="mood-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Mood 🎨</h2><div class="mood-selector"><button onclick="setMood('#ff8fab', 'Happy')">🌸</button><button onclick="setMood('#90caf9', 'Tired')">😴</button><button onclick="setMood('#b39ddb', 'Calm')">🧘</button></div><p id="mood-display"></p></div></section>
+        <section id="resin-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Orders 🎨</h2><div class="pill-input-section"><input type="text" id="order-name" placeholder="Name"><input type="text" id="order-item" placeholder="Item"><button class="main-btn" onclick="addOrder()">+</button></div><ul id="order-list" class="order-grid" style="width: 100%;"></ul></div></section>
+
     </div>
     <script src="script.js"></script>
 </body>
