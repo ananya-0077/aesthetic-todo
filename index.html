@@ -91,6 +91,22 @@
                 <div id="vision-grid" class="vision-grid"></div>
             </div>
         </section>
+        <div class="feature-item" onclick="showTab('breathe-tab')">
+           <span>🌬️</span>
+           <small>Breathe</small>
+        </div>
+
+        <section id="breathe-tab" class="tab-content">
+           <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+           <div class="glass-inner">
+               <div class="breathe-container">
+                    <div class="breathe-circle"></div>
+                    <p id="breathe-text">Ready?</p>
+               </div>
+               <button class="main-btn" onclick="startBreathing()" id="breathe-btn">Start</button>
+           </div>
+        </section>
+        
     </div>
     <script src="script.js"></script>
 </body>
