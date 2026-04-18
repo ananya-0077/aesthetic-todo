@@ -13,7 +13,7 @@ window.onload = () => {
     checkBadges();
 };
 
-// CLOCK & ALARM
+// CLOCK & ALARM SYSTEM
 setInterval(() => {
     const now = new Date();
     const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit', hour12: false});
@@ -21,8 +21,8 @@ setInterval(() => {
     if(document.getElementById('big-clock')) document.getElementById('big-clock').innerText = timeStr;
     
     if(alarmTime === timeStr.substring(0,5)) {
-        alert("⏰ REMINDER: " + (document.getElementById('alarm-note').value || "Check your Sanctuary!"));
-        alarmTime = null;
+        alert("⏰ ALARM: " + (document.getElementById('alarm-note').value || "Check your goals!"));
+        alarmTime = null; 
         document.getElementById('alarm-msg').innerText = "";
     }
 }, 1000);
@@ -30,7 +30,7 @@ setInterval(() => {
 function setAlarm() {
     alarmTime = document.getElementById('alarm-time-input').value;
     if(alarmTime) {
-        document.getElementById('alarm-msg').innerText = "🔔 Active for " + alarmTime;
+        document.getElementById('alarm-msg').innerText = "🔔 Active: " + alarmTime;
         alert("Reminder set! ✨");
     }
 }
@@ -47,7 +47,7 @@ function addWater() {
     waterCount++;
     localStorage.setItem('waterCount', waterCount);
     updateWaterUI();
-    if(waterCount === goals.water) alert("💎 Hydration Goal Met! You're glowing!");
+    if(waterCount === goals.water) alert("💎 Goal Met! 🎀");
 }
 function resetWater() {
     waterCount = 0;
@@ -60,7 +60,7 @@ function updateWaterUI() {
     checkBadges();
 }
 function updateWaterGoal() {
-    goals.water = parseInt(document.getElementById('water-goal-input').value);
+    goals.water = parseInt(document.getElementById('water-goal-input').value) || 8;
     localStorage.setItem('userGoals', JSON.stringify(goals));
     checkBadges();
 }
@@ -70,7 +70,7 @@ function addSteps() {
     steps += 1000;
     localStorage.setItem('userSteps', steps);
     updateFitnessUI();
-    if(steps >= goals.steps && steps < goals.steps + 1000) alert("🏆 Step Goal Crushed!");
+    if(steps >= goals.steps && steps < goals.steps + 1000) alert("🏆 Step Goal Met!");
 }
 function resetSteps() {
     steps = 0;
@@ -84,7 +84,7 @@ function updateFitnessUI() {
     checkBadges();
 }
 function updateStepGoal() {
-    goals.steps = parseInt(document.getElementById('step-goal-input').value);
+    goals.steps = parseInt(document.getElementById('step-goal-input').value) || 10000;
     localStorage.setItem('userGoals', JSON.stringify(goals));
     updateFitnessUI();
 }
@@ -97,7 +97,7 @@ function checkBadges() {
     const badgeList = [
         { i: '🏆', c: steps >= goals.steps },
         { i: '💎', c: waterCount >= goals.water },
-        { i: '🎀', c: false } // Task badge logic
+        { i: '🎀', c: false }
     ];
     badgeList.forEach(b => {
         const span = document.createElement('span');
@@ -112,15 +112,14 @@ function initTimer() {
     const startBtn = document.getElementById('start-timer'), clock = document.getElementById('timer-clock');
     if(!startBtn) return;
     startBtn.onclick = () => {
-        if(timerId) {
-            clearInterval(timerId); timerId = null; startBtn.innerText = "Start";
-        } else {
+        if(timerId) { clearInterval(timerId); timerId = null; startBtn.innerText = "Start"; }
+        else {
             startBtn.innerText = "Pause";
             timerId = setInterval(() => {
                 timeLeft--;
                 let m = Math.floor(timeLeft/60), s = timeLeft%60;
                 clock.innerText = `${m}:${s<10?'0':''}${s}`;
-                if(timeLeft<=0) { clearInterval(timerId); alert("Focus session done! 🌸"); }
+                if(timeLeft<=0) { clearInterval(timerId); alert("Session done! 🌸"); }
             }, 1000);
         }
     };

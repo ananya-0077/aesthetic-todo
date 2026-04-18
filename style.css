@@ -12,24 +12,30 @@ body { margin: 0; font-family: 'Quicksand', sans-serif; background: var(--bg-gra
 .tab-content { display: none; width: 100%; }
 .tab-content.active { display: block !important; }
 
-.glass-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 420px; width: 100%; }
+/* THE CENTER FIX */
+.glass-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 420px; width: 100%; text-align: center; }
 
-/* Reminder Form Fix */
-.reminder-form { width: 100%; display: flex; flex-direction: column; gap: 15px; align-items: center; margin-top: 10px; }
-.input-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; }
-.input-wrapper label { font-size: 0.7rem; font-weight: 600; margin-bottom: 5px; opacity: 0.6; }
+/* REMINDERS FORM */
+.reminder-form { width: 90%; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.full-pill-input { width: 100%; padding: 12px; border-radius: 20px; border: 1px solid white; background: rgba(255,255,255,0.5); text-align: center; font-family: inherit; }
 
-.inline-input-large { background: white; border: 1px solid var(--accent); border-radius: 12px; padding: 10px; font-family: inherit; font-size: 1.1rem; text-align: center; color: var(--text); }
-.full-pill-input { width: 85%; padding: 12px; border-radius: 25px; border: none; background: rgba(255,255,255,0.6); font-family: inherit; outline: none; text-align: center; }
-
-/* Dashboard UI */
+/* DASHBOARD */
 .wellness-card { background: rgba(255, 255, 255, 0.3); border-radius: 25px; padding: 15px; margin-bottom: 15px; }
-.badges-row { display: flex; justify-content: center; gap: 10px; margin-bottom: 5px; min-height: 35px; }
+.badges-row { display: flex; justify-content: center; gap: 12px; height: 35px; }
 .badge-icon { font-size: 1rem; opacity: 0.2; filter: grayscale(1); background: white; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
-.badge-unlocked { opacity: 1; filter: grayscale(0); border: 1.5px solid var(--accent); transform: scale(1.1); }
+.badge-unlocked { opacity: 1; filter: grayscale(0); border: 1px solid var(--accent); transform: scale(1.1); box-shadow: 0 0 10px white; }
 
-.display-circle { width: 130px; height: 130px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border: 4px solid var(--accent); margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+/* GRIDS */
+.feature-grid-9, .feature-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+.feature-item { background: white; border-radius: 18px; padding: 12px 5px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+.feature-item span { font-size: 1.4rem; display: block; }
+.feature-item small { font-size: 0.6rem; font-weight: 600; opacity: 0.8; }
 
-.controls-row { display: flex; gap: 10px; justify-content: center; width: 100%; margin-top: 15px; }
-.main-btn { background: var(--accent); color: white; border: none; padding: 12px 24px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+/* ELEMENTS */
+.display-circle { width: 120px; height: 120px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border: 4px solid var(--accent); margin-bottom: 20px; }
+.main-btn { background: var(--accent); color: white; border: none; padding: 12px 24px; border-radius: 20px; font-weight: bold; cursor: pointer; }
 .secondary-btn { background: white; color: var(--accent); border: 1.5px solid var(--accent); padding: 10px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; }
+.controls-row { display: flex; gap: 10px; margin-top: 15px; }
+.inline-input-sm { background: rgba(255,255,255,0.5); border: none; border-radius: 8px; width: 50px; text-align: center; font-weight: bold; }
+.progress-container { width: 100%; height: 10px; background: rgba(0,0,0,0.05); border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
+.progress-bar { height: 100%; background: linear-gradient(90deg, #ff7043, #ffab91); width: 0%; transition: width 0.5s; }

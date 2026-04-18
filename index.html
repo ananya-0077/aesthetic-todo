@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ananya's Lifestyle Hub</title>
+    <title>Ananya's Life Hub</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -23,7 +23,7 @@
             <div id="dashboard-content">
                 <div class="wellness-card">
                     <div id="badge-display" class="badges-row"></div>
-                    <p id="affirmation-text">"Everything is falling into place. 🎀"</p>
+                    <p id="affirmation-text">"Focus on the step, not the mountain. 🎀"</p>
                 </div>
 
                 <div class="alarm-mini" onclick="showTab('alarm-tab')">
@@ -41,6 +41,10 @@
 
                 <div class="lofi-widget">
                     <iframe width="100%" height="80" src="https://www.youtube.com/embed/jfKfPfyJRdk?controls=0" frameborder="0"></iframe>
+                </div>
+
+                <div class="oracle-container" onclick="flipCard()">
+                    <div id="oracle-card" class="oracle-card">Flip for Taurus Guidance 🔮</div>
                 </div>
 
                 <div class="pill-input-section">
@@ -66,7 +70,7 @@
             <h3 class="grid-label">STUDIO & STUDY</h3>
             <div class="feature-grid-3">
                 <div class="feature-item" onclick="showTab('resin-tab')"><span>✨</span><small>Orders</small></div>
-                <div class="feature-item" onclick="showTab('alarm-tab')"><span>⏰</span><small>Alarm</small></div>
+                <div class="feature-item" onclick="showTab('alarm-tab')"><span>⏰</span><small>Remind</small></div>
                 <div class="feature-item" onclick="showTab('degree-tab')"><span>🎓</span><small>Degree</small></div>
             </div>
         </section>
@@ -76,7 +80,7 @@
             <div class="glass-inner">
                 <div class="display-circle">🌱</div>
                 <div class="stats-group">
-                    <p>Target: <input type="number" id="water-goal-input" class="inline-input" onchange="updateWaterGoal()"> glasses</p>
+                    <p>Target: <input type="number" id="water-goal-input" class="inline-input-sm" onchange="updateWaterGoal()"> glasses</p>
                     <p>Current: <span id="water-count">0</span></p>
                 </div>
                 <div class="controls-row">
@@ -92,17 +96,13 @@
                 <h2>Reminders ⏰</h2>
                 <div class="display-circle" id="big-clock">00:00:00</div>
                 <div class="reminder-form">
-                    <div class="input-wrapper">
-                        <label>Time:</label>
-                        <input type="time" id="alarm-time-input" class="inline-input-large">
-                    </div>
-                    <div class="input-wrapper">
-                        <label>Task:</label>
-                        <input type="text" id="alarm-note" placeholder="What should I remind you?" class="full-pill-input">
-                    </div>
+                    <label>Time:</label>
+                    <input type="time" id="alarm-time-input" class="full-pill-input">
+                    <label>Remind me to:</label>
+                    <input type="text" id="alarm-note" placeholder="ECE Lab / Resin Pour..." class="full-pill-input">
                     <button class="main-btn" onclick="setAlarm()">Set Reminder</button>
+                    <p id="alarm-msg"></p>
                 </div>
-                <p id="alarm-msg"></p>
             </div>
         </section>
 
@@ -112,7 +112,7 @@
                 <h2>Fitness 👟</h2>
                 <div class="progress-container"><div id="step-progress" class="progress-bar"></div></div>
                 <div class="stats-group">
-                    <p><span id="current-steps">0</span> / <input type="number" id="step-goal-input" class="inline-input" onchange="updateStepGoal()"> steps</p>
+                    <p><span id="current-steps">0</span> / <input type="number" id="step-goal-input" class="inline-input-sm" onchange="updateStepGoal()"> steps</p>
                 </div>
                 <div class="controls-row">
                     <button class="main-btn" onclick="addSteps()">+1000 Steps</button>
@@ -133,11 +133,7 @@
             </div>
         </section>
 
-        <section id="gratitude-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><div class="jar-visual">🏺</div><div id="jar-notes-display" class="notes-container"></div><button class="main-btn" onclick="addGratitude()">Add</button></div></section>
-        <section id="vision-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><div id="vision-board-display" class="photo-masonry"></div><button class="main-btn" onclick="addImage()">Add Photo</button></div></section>
-        <section id="breathe-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Breathe 🌬️</h2><div class="breathe-circle"></div><button class="main-btn" onclick="startBreathing()">Start</button></div></section>
-        <section id="journal-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Diary 🔒</h2><input type="password" id="diary-pin" placeholder="PIN"><button class="main-btn" onclick="unlockDiary()">Unlock</button></div></section>
-    </div>
+        </div>
     <script src="script.js"></script>
 </body>
 </html>
