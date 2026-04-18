@@ -176,28 +176,35 @@ input.addEventListener('keypress', (e) => {
 });
 
 // --- Feature 3: Secret Diary Logic ---
-const diaryPIN = "1234"; // 🎀 You can change this to any 4 digits!
-
 function unlockDiary() {
     const enteredPin = document.getElementById('diary-pin').value;
-    if (enteredPin === diaryPIN) {
+    const correctPin = "1234"; // Your secret code
+    
+    console.log("Unlock attempt with:", enteredPin); // This helps us debug!
+
+    if (enteredPin === correctPin) {
         document.getElementById('diary-lock').style.display = 'none';
         document.getElementById('diary-open').style.display = 'block';
-        // Load existing note
-        document.getElementById('diary-input').value = localStorage.getItem('secretNote') || "";
-        document.getElementById('diary-pin').value = ""; // clear for next time
+        
+        // Load the saved note
+        const savedNote = localStorage.getItem('secretNote');
+        if (savedNote) {
+            document.getElementById('diary-input').value = savedNote;
+        }
     } else {
         alert("Oops! Wrong PIN. 🎀");
+        document.getElementById('diary-pin').value = ""; // Clear the wrong PIN
     }
 }
 
 function saveDiary() {
     const note = document.getElementById('diary-input').value;
     localStorage.setItem('secretNote', note);
-    alert("Note saved safely in your sanctuary! ✨");
+    alert("Note saved safely! ✨");
 }
 
 function lockDiary() {
     document.getElementById('diary-lock').style.display = 'block';
     document.getElementById('diary-open').style.display = 'none';
+    document.getElementById('diary-pin').value = ""; // Clear PIN for safety
 }
