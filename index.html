@@ -110,10 +110,28 @@
                     <div class="controls">
                     <button class="main-btn" style="background: #ba68c8;" onclick="saveDiary()">Save Note</button>
                     <button class="secondary-btn" onclick="lockDiary()">Lock</button>
+                    </div>
                 </div>
             </div>
+        </section>
+
+        <div class="feature-item" onclick="showTab('vision-tab')">
+            <span>🖼️</span>
+            <small>Vision Board</small>
         </div>
-    </section>
+
+        <section id="vision-tab" class="tab-content">
+            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+            <div class="glass-inner" style="min-height: 500px;">
+                <h2 style="color: #ffb74d;">vision board 🖼️</h2>
+                <div class="vision-controls">
+                    <input type="text" id="vision-url" placeholder="Paste image link here..." style="width: 60%; margin-bottom: 10px;">
+                    <button class="main-btn" style="background: #ffb74d;" onclick="addImage()">Add Image</button>
+                </div>
+                <div id="vision-grid" class="vision-grid">
+                    </div>
+            </div>
+        </section>
     </div>
 
     <script src="script.js"></script>

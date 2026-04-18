@@ -21,7 +21,8 @@ window.onload = () => {
     
     // 3. Load Saved Data
     loadTasks();
-    updateWaterUI(); // Updates the plant based on saved water count
+    updateWaterUI();
+    renderVisionBoard(); // <--- ADD THIS LINE HERE!
 };
 
 // --- Tab System ---
@@ -208,3 +209,41 @@ function lockDiary() {
     document.getElementById('diary-open').style.display = 'none';
     document.getElementById('diary-pin').value = ""; // Clear PIN for safety
 }
+// --- Feature 4: Vision Board Logic ---
+function addImage() {
+    const urlInput = document.getElementById('vision-url');
+    const url = urlInput.value.trim();
+    
+    if (url !== "") {
+        let visionImages = JSON.parse(localStorage.getItem('visionImages') || "[]");
+        visionImages.push(url);
+        localStorage.setItem('visionImages', JSON.stringify(visionImages));
+        renderVisionBoard();
+        urlInput.value = "";
+    }
+}
+
+function renderVisionBoard() {
+    const grid = document.getElementById('vision-grid');
+    const images = JSON.parse(localStorage.getItem('visionImages') || "[]");
+    
+    grid.innerHTML = "";
+    images.forEach((url, index) => {
+        const img = document.createElement('img');
+        img.src = url;
+        img.className = 'vision-img';
+        img.onclick = () => removeImage(index); // Option to delete
+        grid.appendChild(img);
+    });
+}
+
+function removeImage(index) {
+    if(confirm("Remove this image from your vision board?")) {
+        let visionImages = JSON.parse(localStorage.getItem('visionImages') || "[]");
+        visionImages.splice(index, 1);
+        localStorage.setItem('visionImages', JSON.stringify(visionImages));
+        renderVisionBoard();
+    }
+}
+
+// Don't forget to add renderVisionBoard(); inside your window.onload function!
