@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ananya's Final Hub</title>
+    <title>Ananya's Hub</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -22,17 +22,8 @@
                 <div id="badge-display" class="badges-row"></div>
                 <p id="affirmation-text">"Everything is falling into place. 🎀"</p>
             </div>
-            <div class="alarm-mini" id="mini-alarm-trigger"><span id="mini-clock">00:00:00</span> 🔔</div>
+            <div class="alarm-mini" id="goto-alarm-btn"><span id="mini-clock">00:00:00</span> 🔔</div>
             
-            <div class="big-three-container">
-                <small>DAILY BIG 3 ⚡</small>
-                <div class="big-three-inputs">
-                    <input type="text" id="big1" placeholder="1. High Priority">
-                    <input type="text" id="big2" placeholder="2. Important">
-                    <input type="text" id="big3" placeholder="3. Must do">
-                </div>
-            </div>
-
             <div class="feature-grid-9">
                 <div class="feature-item" data-tab="focus-tab"><span>🐰</span><small>Focus</small></div>
                 <div class="feature-item" data-tab="water-tab"><span>🌱</span><small>Water</small></div>
@@ -53,65 +44,47 @@
             </div>
         </section>
 
-        <section id="water-tab" class="tab-content">
-            <button class="back-btn">← Back</button>
-            <div class="glass-inner">
-                <div class="display-circle">🌱</div>
-                <p>Target: <input type="number" id="w-goal" class="inline-input" value="8"> glasses</p>
-                <p>Current: <span id="w-now">0</span></p>
-                <div class="controls-row">
-                    <button class="main-btn" id="w-add">Drink 💧</button>
-                    <button class="secondary-btn" id="w-reset">Reset</button>
-                </div>
-            </div>
-        </section>
+        <section id="water-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner">
+            <div class="display-circle">🌱</div>
+            <p>Target: <input type="number" id="w-goal" class="inline-input" value="8"> glasses</p>
+            <p>Current: <span id="w-now">0</span></p>
+            <div class="controls-row"><button class="main-btn" id="w-add">Drink 💧</button><button class="secondary-btn" id="w-reset">Reset</button></div>
+        </div></section>
 
-        <section id="gratitude-tab" class="tab-content">
-            <button class="back-btn">← Back</button>
-            <div class="glass-inner">
-                <h2>Gratitude Jar 🏺</h2>
-                <div class="pill-input-section">
-                    <input type="text" id="j-in" placeholder="Grateful for...">
-                    <button id="j-add">+</button>
-                </div>
-                <div id="j-list" class="notes-container"></div>
-            </div>
-        </section>
+        <section id="gratitude-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner">
+            <h2>Gratitude Jar 🏺</h2>
+            <div class="pill-input-section"><input type="text" id="j-in" placeholder="Grateful for..."><button id="j-add">+</button></div>
+            <div id="j-list" class="notes-container"></div>
+        </div></section>
 
-        <section id="mood-tab" class="tab-content">
-            <button class="back-btn">← Back</button>
-            <div class="glass-inner">
-                <h2>Mood 🎨</h2>
-                <div class="mood-selector">
-                    <button class="m-opt" data-color="#ff8fab">🌸</button>
-                    <button class="m-opt" data-color="#90caf9">😴</button>
-                    <button class="m-opt" data-color="#b39ddb">🧘</button>
-                </div>
-                <p id="m-status">Pick your vibe</p>
+        <section id="mood-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner">
+            <h2>Mood 🎨</h2>
+            <div class="mood-selector">
+                <button class="m-opt" data-color="#ff8fab">🌸</button><button class="m-opt" data-color="#90caf9">😴</button><button class="m-opt" data-color="#b39ddb">🧘</button>
             </div>
-        </section>
+            <p id="m-status">Pick your vibe</p>
+        </div></section>
 
-        <section id="degree-tab" class="tab-content">
-            <button class="back-btn">← Back</button>
-            <div class="glass-inner">
-                <h2>ECE Tracker 🎓</h2>
-                <div class="progress-container"><div id="deg-bar" class="progress-bar"></div></div>
-                <div class="pill-input-section">
-                    <input type="text" id="deg-in" placeholder="New Sub...">
-                    <button id="deg-add">+</button>
-                </div>
-                <ul id="deg-list" class="task-grid" style="width:100%"></ul>
-            </div>
-        </section>
+        <section id="degree-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner">
+            <h2>ECE Tracker 🎓</h2>
+            <div class="progress-container"><div id="deg-bar" class="progress-bar"></div></div>
+            <div class="pill-input-section"><input type="text" id="deg-in" placeholder="New Sub..."><button id="deg-add">+</button></div>
+            <ul id="deg-list" class="task-grid" style="width:100%"></ul>
+        </div></section>
 
-        <section id="focus-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Focus 🐰</h2><div class="display-circle">25:00</div></div></section>
-        <section id="vision-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Vision 🖼️</h2></div></section>
-        <section id="breathe-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Breathe 🌬️</h2></div></section>
-        <section id="fitness-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Fitness 👟</h2></div></section>
-        <section id="sleep-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Sleep ☁️</h2></div></section>
-        <section id="journal-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Diary 🔒</h2></div></section>
-        <section id="alarm-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Alarm ⏰</h2></div></section>
-        <section id="resin-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Orders ✨</h2></div></section>
+        <section id="resin-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner">
+            <h2>Orders ✨</h2>
+            <div class="pill-input-section"><input type="text" id="o-name" placeholder="Name"><input type="text" id="o-item" placeholder="Item"><button id="o-add">+</button></div>
+            <ul id="o-list" class="order-grid" style="width:100%"></ul>
+        </div></section>
+        
+        <section id="focus-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Focus 🐰</h2><div class="display-circle" id="focus-clock">25:00</div><div class="controls-row"><button class="main-btn" id="focus-start">Start</button><button class="secondary-btn" id="focus-reset">Reset</button></div></div></section>
+        <section id="vision-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Vision Board</h2><div id="v-list" class="photo-masonry"></div></div></section>
+        <section id="breathe-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Breathe 🌬️</h2><div class="breathe-circle" id="br-circle"></div><button class="main-btn" id="br-start">Start</button></div></section>
+        <section id="fitness-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Fitness 👟</h2><p><span id="f-now">0</span> / 10000</p><button class="main-btn" id="f-add">+1k Steps</button><button class="secondary-btn" id="f-reset">Reset</button></div></section>
+        <section id="sleep-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Sleep ☁️</h2><input type="number" id="s-hrs" class="inline-input" placeholder="Hrs"><textarea id="s-dreams"></textarea><button class="main-btn" id="s-save">Log</button></div></section>
+        <section id="journal-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Diary 🔒</h2><div id="d-lock"><input type="password" id="d-pin" placeholder="1234"><button class="main-btn" id="d-unlock">Unlock</button></div><div id="d-open" style="display:none; width:100%;"><textarea id="d-area"></textarea><button class="main-btn" id="d-save">Save</button></div></div></section>
+        <section id="alarm-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Alarm ⏰</h2><div class="display-circle" id="big-clock">00:00</div><input type="time" id="al-time" class="full-pill"><button class="main-btn" id="al-set">Set</button></div></section>
     </div>
     <script src="script.js"></script>
 </body>
