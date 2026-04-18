@@ -12,8 +12,23 @@ window.onload = () => {
 };
 
 function showTab(tabId) {
+    // Hide all tabs
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    
+    // Show the selected tab
     document.getElementById(tabId).classList.add('active');
+
+    // Hide main header and tasks if not on dashboard
+    const header = document.getElementById('main-header');
+    const dashboardItems = document.getElementById('dashboard-content');
+    
+    if (tabId === 'dashboard') {
+        header.style.display = 'block';
+        dashboardItems.style.display = 'block';
+    } else {
+        header.style.display = 'none';
+        dashboardItems.style.display = 'none';
+    }
 }
 
 // Tasks

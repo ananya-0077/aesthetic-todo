@@ -20,23 +20,25 @@
                 <p id="date-display"></p>
             </header>
 
-            <div class="wellness-card">
-                <small>DAILY AFFIRMATION</small>
-                <p id="affirmation-text">"Loading magic..."</p>
-            </div>
+            <div id="dashboard-content">
+                <div class="wellness-card">
+                    <small>DAILY AFFIRMATION</small>
+                    <p id="affirmation-text">"Everything is falling into place. 🎀"</p>
+                </div>
 
-            <div class="input-section">
-                <input type="text" id="todo-input" placeholder="Add a task...">
-                <button id="add-btn">+</button>
+                <div class="input-section">
+                    <input type="text" id="todo-input" placeholder="Add a task...">
+                    <button id="add-btn">+</button>
+                </div>
+                <ul id="todo-list"></ul>
             </div>
-            <ul id="todo-list"></ul>
 
             <div class="feature-grid">
                 <div class="feature-item" onclick="showTab('focus-tab')"><span>🐰</span><small>Focus</small></div>
                 <div class="feature-item" onclick="showTab('water-tab')"><span>🌱</span><small>Water</small></div>
                 <div class="feature-item" onclick="showTab('journal-tab')"><span>🔒</span><small>Diary</small></div>
                 <div class="feature-item" onclick="showTab('vision-tab')"><span>🖼️</span><small>Vision</small></div>
-                <div class="feature-item" onclick="showTab('breathe-tab')"><span>🌬️</span><small>Breathe</small></div>
+                <div class="feature-item breathe-wide" onclick="showTab('breathe-tab')"><span>🌬️</span><small>Breathe</small></div>
             </div>
         </section>
 
