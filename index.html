@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wellness Sanctuary</title>
+    <title>Ananya's Wellness Sanctuary</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -15,7 +15,7 @@
 
     <div class="app-container">
         <header id="main-header">
-            <h1 id="app-title">today's goals ✨</h1>
+            <h1>today's goals ✨</h1>
             <p id="date-display"></p>
         </header>
 
@@ -41,15 +41,54 @@
                 <div class="feature-item" onclick="showTab('vision-tab')"><span>🖼️</span><small>Vision</small></div>
                 <div class="feature-item" onclick="showTab('breathe-tab')"><span>🌬️</span><small>Breathe</small></div>
                 <div class="feature-item" onclick="showTab('fitness-tab')"><span>👟</span><small>Fitness</small></div>
+                <div class="feature-item" onclick="showTab('study-tab')"><span>📚</span><small>Study</small></div>
             </div>
         </section>
 
         <section id="focus-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><div class="display-circle"><span id="timer-clock">25:00</span></div><div class="controls"><button id="start-timer" class="main-btn">Start</button><button id="reset-timer" class="secondary-btn">Reset</button></div></div></section>
-        <section id="water-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><div class="display-circle"><div id="plant-display" style="font-size: 3rem;">🌱</div></div><p>Target: <input type="number" id="water-goal-input" class="inline-input" onchange="updateWaterGoal()"></p><p>Current: <span id="water-count">0</span></p><div class="controls"><button class="main-btn" style="background:#4db6ac;" onclick="addWater()">Drink 💧</button><button class="secondary-btn" onclick="resetWater()">Reset</button></div></div></section>
+        
+        <section id="water-tab" class="tab-content">
+            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+            <div class="glass-inner">
+                <div class="display-circle"><div id="plant-display" style="font-size: 3rem;">🌱</div></div>
+                <p>Target: <input type="number" id="water-goal-input" class="inline-input" onchange="updateWaterGoal()"></p>
+                <p>Current: <span id="water-count">0</span></p>
+                <div class="controls"><button class="main-btn" style="background:#4db6ac;" onclick="addWater()">Drink 💧</button><button class="secondary-btn" onclick="resetWater()">Reset</button></div>
+            </div>
+        </section>
+
+        <section id="fitness-tab" class="tab-content">
+            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+            <div class="glass-inner">
+                <h2 style="color:#ff7043;">movement log</h2>
+                <div class="progress-container"><div id="step-progress" class="progress-bar"></div></div>
+                <p><span id="current-steps">0</span> / <input type="number" id="step-goal-input" class="inline-input" onchange="updateStepGoal()"> steps</p>
+                <div class="pill-input-section" style="margin-top:20px;"><input type="number" id="step-input" placeholder="Add steps..."><button class="main-btn" style="background:#ff7043; border-radius:50%; width:30px; height:30px;" onclick="addSteps()">+</button></div>
+                <button class="secondary-btn" onclick="resetSteps()" style="margin-top:15px;">New Day</button>
+            </div>
+        </section>
+
+        <section id="study-tab" class="tab-content">
+            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+            <div class="glass-inner">
+                <div id="study-initial">
+                    <textarea id="notes-input" placeholder="Paste ECE notes here..."></textarea>
+                    <button class="main-btn" onclick="startQuiz()">Generate Quiz</button>
+                </div>
+                <div id="quiz-area" style="display:none; width:100%;">
+                    <div class="quiz-card">
+                        <p id="question-text"></p>
+                        <input type="text" id="answer-input" placeholder="Answer...">
+                        <button class="main-btn" style="margin-top:10px;" onclick="checkAnswer()">Submit</button>
+                    </div>
+                    <p style="margin-top:15px;">Study Score: <span id="quiz-score">0</span> ⭐</p>
+                </div>
+            </div>
+        </section>
+
         <section id="journal-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><div id="diary-lock"><input type="password" id="diary-pin" placeholder="PIN" style="width:80px;text-align:center;"><button class="main-btn" style="background:#ba68c8;margin-top:10px;" onclick="unlockDiary()">Unlock</button></div><div id="diary-open" style="display:none;width:100%;"><textarea id="diary-input"></textarea><button class="main-btn" style="background:#ba68c8;" onclick="saveDiary()">Save</button></div></div></section>
         <section id="vision-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><input type="text" id="vision-url" placeholder="Paste link..."><button class="main-btn" style="background:#ffb74d;margin-top:10px;" onclick="addImage()">Add Image</button><div id="vision-grid" class="vision-grid"></div></div></section>
         <section id="breathe-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><div class="breathe-circle"></div><p id="breathe-text">Ready?</p><button class="main-btn" onclick="startBreathing()" id="breathe-btn" style="background:#90caf9;">Start</button></div></section>
-        <section id="fitness-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2 style="color:#ff7043;">movement log</h2><div class="progress-container"><div id="step-progress" class="progress-bar"></div></div><p><span id="current-steps">0</span> / <input type="number" id="step-goal-input" class="inline-input" onchange="updateStepGoal()"> steps</p><div class="pill-input-section" style="margin-top:20px;"><input type="number" id="step-input" placeholder="Add steps..."><button class="main-btn" style="background:#ff7043; border-radius:50%; width:30px; height:30px;" onclick="addSteps()">+</button></div><button class="secondary-btn" onclick="resetSteps()" style="margin-top:15px;">New Day</button></div></section>
     </div>
     <script src="script.js"></script>
 </body>

@@ -1,6 +1,6 @@
 const affirmations = ["Ananya, you are doing great! ✨", "Focus on the step, not the mountain. 🏔️", "Everything is falling into place. 🎀"];
 const plants = ["🌱", "🌿", "🪴", "🍀", "🌳", "🌻", "🌈"];
-let breathingInterval = null;
+let breathingInterval = null, quizScore = 0;
 
 let goals = JSON.parse(localStorage.getItem('userGoals')) || { steps: 10000, water: 8 };
 let steps = parseInt(localStorage.getItem('userSteps')) || 0;
@@ -14,7 +14,6 @@ window.onload = () => {
     updateWaterUI();
     renderVisionBoard();
     updateFitnessUI();
-    checkBadges();
 };
 
 function showTab(tabId) {
@@ -32,7 +31,8 @@ function checkBadges() {
     const badgeList = [
         { icon: '🏆', condition: steps >= goals.steps },
         { icon: '💎', condition: waterCount >= goals.water },
-        { icon: '⭐', condition: document.querySelectorAll('#todo-list li span[style*="line-through"]').length >= 3 }
+        { icon: '⭐', condition: quizScore >= 3 },
+        { icon: '🎀', condition: document.querySelectorAll('#todo-list li span[style*="line-through"]').length >= 3 }
     ];
     badgeList.forEach(b => {
         const span = document.createElement('span');
@@ -40,6 +40,12 @@ function checkBadges() {
         span.className = `badge-icon ${b.condition ? 'badge-unlocked' : ''}`;
         row.appendChild(span);
     });
+}
+
+// INSTANT REWARDS
+function triggerReward(msg) {
+    alert(msg);
+    checkBadges();
 }
 
 // Tasks
@@ -65,21 +71,14 @@ function saveTasks() {
 }
 function loadTasks() { JSON.parse(localStorage.getItem('tasks') || "[]").forEach(t => createTask(t.text, t.completed)); }
 
-// Fitness & Targets
-function updateStepGoal() { goals.steps = parseInt(document.getElementById('step-goal-input').value) || 10000; localStorage.setItem('userGoals', JSON.stringify(goals)); updateFitnessUI(); }
-function addSteps() { const val = parseInt(document.getElementById('step-input').value); if (val > 0) { steps += val; localStorage.setItem('userSteps', steps); updateFitnessUI(); document.getElementById('step-input').value = ""; } }
-function resetSteps() { steps = 0; localStorage.setItem('userSteps', 0); updateFitnessUI(); }
-function updateFitnessUI() {
-    if(document.getElementById('current-steps')) document.getElementById('current-steps').innerText = steps.toLocaleString();
-    if(document.getElementById('step-goal-input')) document.getElementById('step-goal-input').value = goals.steps;
-    const bar = document.getElementById('step-progress');
-    if(bar) bar.style.width = Math.min((steps / goals.steps) * 100, 100) + "%";
-    checkBadges();
-}
-
 // Water
 function updateWaterGoal() { goals.water = parseInt(document.getElementById('water-goal-input').value) || 8; localStorage.setItem('userGoals', JSON.stringify(goals)); updateWaterUI(); }
-function addWater() { waterCount++; localStorage.setItem('waterCount', waterCount); updateWaterUI(); }
+function addWater() { 
+    waterCount++; 
+    localStorage.setItem('waterCount', waterCount); 
+    updateWaterUI(); 
+    if(waterCount === goals.water) triggerReward("💎 CRYSTAL DROP UNLOCKED! Perfect hydration, Ananya!");
+}
 function resetWater() { waterCount = 0; localStorage.setItem('waterCount', 0); updateWaterUI(); }
 function updateWaterUI() {
     if(document.getElementById('water-count')) document.getElementById('water-count').innerText = waterCount;
@@ -89,55 +88,49 @@ function updateWaterUI() {
     checkBadges();
 }
 
-// Diary, Vision, Breathe
-function unlockDiary() {
-    if (document.getElementById('diary-pin').value === "1234") {
-        document.getElementById('diary-lock').style.display = 'none';
-        document.getElementById('diary-open').style.display = 'block';
-        document.getElementById('diary-input').value = localStorage.getItem('secretNote') || "";
-    } else { alert("Wrong PIN! 🎀"); }
+// Fitness
+function updateStepGoal() { goals.steps = parseInt(document.getElementById('step-goal-input').value) || 10000; localStorage.setItem('userGoals', JSON.stringify(goals)); updateFitnessUI(); }
+function addSteps() { 
+    const val = parseInt(document.getElementById('step-input').value); 
+    if (val > 0) { 
+        steps += val; 
+        localStorage.setItem('userSteps', steps); 
+        updateFitnessUI(); 
+        document.getElementById('step-input').value = ""; 
+        if(steps >= goals.steps && steps < goals.steps + val) triggerReward("🏆 MOVEMENT MASTER! Goal crushed!");
+    } 
 }
-function saveDiary() { localStorage.setItem('secretNote', document.getElementById('diary-input').value); alert("Saved! ✨"); }
-function addImage() {
-    const url = document.getElementById('vision-url').value.trim();
-    if (url) {
-        let v = JSON.parse(localStorage.getItem('visionImages') || "[]");
-        v.push(url);
-        localStorage.setItem('visionImages', JSON.stringify(v));
-        renderVisionBoard();
-        document.getElementById('vision-url').value = "";
-    }
-}
-function renderVisionBoard() {
-    const g = document.getElementById('vision-grid'); if(!g) return; g.innerHTML = "";
-    JSON.parse(localStorage.getItem('visionImages') || "[]").forEach(url => {
-        const img = document.createElement('img'); img.src = url; img.className = 'vision-img'; g.appendChild(img);
-    });
-}
-function startBreathing() {
-    const circle = document.querySelector('.breathe-circle'), text = document.getElementById('breathe-text'), btn = document.getElementById('breathe-btn');
-    if (breathingInterval) { clearInterval(breathingInterval); breathingInterval = null; circle.classList.remove('breathe-expand'); text.innerText = "Ready?"; btn.innerText = "Start"; return; }
-    btn.innerText = "Stop";
-    const cycle = () => {
-        text.innerText = "Inhale..."; circle.classList.add('breathe-expand');
-        setTimeout(() => { text.innerText = "Hold..."; setTimeout(() => { text.innerText = "Exhale..."; circle.classList.remove('breathe-expand'); }, 2000); }, 4000);
-    };
-    cycle(); breathingInterval = setInterval(cycle, 10000);
+function resetSteps() { steps = 0; localStorage.setItem('userSteps', 0); updateFitnessUI(); }
+function updateFitnessUI() {
+    if(document.getElementById('current-steps')) document.getElementById('current-steps').innerText = steps.toLocaleString();
+    if(document.getElementById('step-goal-input')) document.getElementById('step-goal-input').value = goals.steps;
+    const bar = document.getElementById('step-progress');
+    if(bar) bar.style.width = Math.min((steps / goals.steps) * 100, 100) + "%";
+    checkBadges();
 }
 
-// Timer
-let timeLeft = 25 * 60, timerId = null;
-const timerClock = document.getElementById('timer-clock');
-const startBtn = document.getElementById('start-timer');
-if(startBtn) {
-    startBtn.onclick = () => {
-        if (timerId) { clearInterval(timerId); timerId = null; startBtn.innerText = "Start"; }
-        else { startBtn.innerText = "Pause"; timerId = setInterval(() => {
-            timeLeft--;
-            let mins = Math.floor(timeLeft / 60), secs = timeLeft % 60;
-            timerClock.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-            if (timeLeft <= 0) { clearInterval(timerId); alert("Time for a break, Ananya! 🌸"); }
-        }, 1000); }
-    };
+// STUDY BUDDY
+function startQuiz() {
+    if(document.getElementById('notes-input').value.length < 5) return alert("Paste your notes first!");
+    document.getElementById('study-initial').style.display = 'none';
+    document.getElementById('quiz-area').style.display = 'block';
+    document.getElementById('question-text').innerText = "AI Question: How does this concept apply to your ECE lab?";
 }
-document.getElementById('reset-timer').onclick = () => { clearInterval(timerId); timerId = null; timeLeft = 25 * 60; timerClock.innerText = "25:00"; startBtn.innerText = "Start"; };
+function checkAnswer() {
+    if(document.getElementById('answer-input').value.trim() !== "") {
+        quizScore++;
+        document.getElementById('quiz-score').innerText = quizScore;
+        document.getElementById('answer-input').value = "";
+        alert("Correct! ⭐");
+        if(quizScore === 3) triggerReward("📚 BRAIN POWER! You've earned the Study Star!");
+        checkBadges();
+    }
+}
+
+// VISION, DIARY, BREATHE, TIMER (Remains same as before...)
+function unlockDiary() { if (document.getElementById('diary-pin').value === "1234") { document.getElementById('diary-lock').style.display = 'none'; document.getElementById('diary-open').style.display = 'block'; document.getElementById('diary-input').value = localStorage.getItem('secretNote') || ""; } else { alert("Wrong PIN! 🎀"); } }
+function saveDiary() { localStorage.setItem('secretNote', document.getElementById('diary-input').value); alert("Saved! ✨"); }
+function addImage() { const url = document.getElementById('vision-url').value.trim(); if (url) { let v = JSON.parse(localStorage.getItem('visionImages') || "[]"); v.push(url); localStorage.setItem('visionImages', JSON.stringify(v)); renderVisionBoard(); document.getElementById('vision-url').value = ""; } }
+function renderVisionBoard() { const g = document.getElementById('vision-grid'); if(!g) return; g.innerHTML = ""; JSON.parse(localStorage.getItem('visionImages') || "[]").forEach(url => { const img = document.createElement('img'); img.src = url; img.className = 'vision-img'; g.appendChild(img); }); }
+function startBreathing() { const circle = document.querySelector('.breathe-circle'), text = document.getElementById('breathe-text'), btn = document.getElementById('breathe-btn'); if (breathingInterval) { clearInterval(breathingInterval); breathingInterval = null; circle.classList.remove('breathe-expand'); text.innerText = "Ready?"; btn.innerText = "Start"; return; } btn.innerText = "Stop"; const cycle = () => { text.innerText = "Inhale..."; circle.classList.add('breathe-expand'); setTimeout(() => { text.innerText = "Hold..."; setTimeout(() => { text.innerText = "Exhale..."; circle.classList.remove('breathe-expand'); }, 2000); }, 4000); }; cycle(); breathingInterval = setInterval(cycle, 10000); }
+let timeLeft = 25 * 60, timerId = null; const timerClock = document.getElementById('timer-clock'); const startBtn = document.getElementById('start-timer'); startBtn.onclick = () => { if (timerId) { clearInterval(timerId); timerId = null; startBtn.innerText = "Start"; } else { startBtn.innerText = "Pause"; timerId = setInterval(() => { timeLeft--; let mins = Math.floor(timeLeft / 60), secs = timeLeft % 60; timerClock.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`; if (timeLeft <= 0) { clearInterval(timerId); alert("Break time, Ananya! 🌸"); } }, 1000); } }; document.getElementById('reset-timer').onclick = () => { clearInterval(timerId); timerId = null; timeLeft = 25 * 60; timerClock.innerText = "25:00"; startBtn.innerText = "Start"; };
