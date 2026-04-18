@@ -13,48 +13,33 @@ window.onload = () => {
 };
 
 function showTab(tabId) {
-    // Hide all tabs
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-    
-    // Show the selected tab
     document.getElementById(tabId).classList.add('active');
-
-    // Hide main header and tasks if not on dashboard
-    const header = document.getElementById('main-header');
-    const dashboardItems = document.getElementById('dashboard-content');
-    
-    if (tabId === 'dashboard') {
-        header.style.display = 'block';
-        dashboardItems.style.display = 'block';
-    } else {
-        header.style.display = 'none';
-        dashboardItems.style.display = 'none';
-    }
+    const head = document.getElementById('main-header');
+    const dash = document.getElementById('dashboard-content');
+    if (tabId === 'dashboard') { head.style.display = 'block'; dash.style.display = 'block'; }
+    else { head.style.display = 'none'; dash.style.display = 'none'; }
 }
 
 // Tasks
-const todoInput = document.getElementById('todo-input');
-const todoList = document.getElementById('todo-list');
+const tInput = document.getElementById('todo-input');
 document.getElementById('add-btn').onclick = () => {
-    if (todoInput.value.trim()) { createTask(todoInput.value); saveTasks(); todoInput.value = ""; }
+    if (tInput.value.trim()) { createTask(tInput.value); saveTasks(); tInput.value = ""; }
 };
 function createTask(text, completed = false) {
     const li = document.createElement('li');
-    li.style.cssText = "list-style:none; background:white; margin:8px 0; padding:10px; border-radius:12px; display:flex; justify-content:space-between; align-items:center;";
-    li.innerHTML = `<span style="${completed ? 'text-decoration:line-through; opacity:0.5' : ''}">${text}</span><button onclick="this.parentElement.remove(); saveTasks();" style="border:none; background:none; cursor:pointer;">☁️</button>`;
-    li.onclick = (e) => {
-        if(e.target.tagName !== 'BUTTON') {
-            const s = li.querySelector('span');
-            s.style.textDecoration = s.style.textDecoration === 'line-through' ? 'none' : 'line-through';
-            s.style.opacity = s.style.opacity === '0.5' ? '1' : '0.5';
-            saveTasks();
-        }
+    li.innerHTML = `<span style="${completed ? 'text-decoration:line-through; opacity:0.5' : ''}">${text}</span><span style="opacity:0.2">☁️</span>`;
+    li.onclick = () => {
+        const s = li.querySelector('span');
+        s.style.textDecoration = s.style.textDecoration === 'line-through' ? 'none' : 'line-through';
+        s.style.opacity = s.style.opacity === '0.5' ? '1' : '0.5';
+        saveTasks();
     };
-    todoList.appendChild(li);
+    document.getElementById('todo-list').appendChild(li);
 }
 function saveTasks() {
     const tasks = [];
-    document.querySelectorAll('#todo-list li span').forEach(s => tasks.push({text: s.innerText, completed: s.style.textDecoration === 'line-through'}));
+    document.querySelectorAll('#todo-list li span:first-child').forEach(s => tasks.push({text: s.innerText, completed: s.style.textDecoration === 'line-through'}));
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 function loadTasks() { JSON.parse(localStorage.getItem('tasks') || "[]").forEach(t => createTask(t.text, t.completed)); }
@@ -63,17 +48,15 @@ function loadTasks() { JSON.parse(localStorage.getItem('tasks') || "[]").forEach
 let timeLeft = 25 * 60, timerId = null;
 const timerClock = document.getElementById('timer-clock');
 const startBtn = document.getElementById('start-timer');
-if(startBtn) {
-    startBtn.onclick = () => {
-        if (timerId) { clearInterval(timerId); timerId = null; startBtn.innerText = "Start"; }
-        else { startBtn.innerText = "Pause"; timerId = setInterval(() => {
-            timeLeft--;
-            let mins = Math.floor(timeLeft / 60), secs = timeLeft % 60;
-            timerClock.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-            if (timeLeft <= 0) { clearInterval(timerId); alert("Break time! 🌸"); }
-        }, 1000); }
-    };
-}
+startBtn.onclick = () => {
+    if (timerId) { clearInterval(timerId); timerId = null; startBtn.innerText = "Start"; }
+    else { startBtn.innerText = "Pause"; timerId = setInterval(() => {
+        timeLeft--;
+        let mins = Math.floor(timeLeft / 60), secs = timeLeft % 60;
+        timerClock.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        if (timeLeft <= 0) { clearInterval(timerId); alert("Break time! 🌸"); }
+    }, 1000); }
+};
 document.getElementById('reset-timer').onclick = () => { clearInterval(timerId); timerId = null; timeLeft = 25 * 60; timerClock.innerText = "25:00"; startBtn.innerText = "Start"; };
 
 // Water
@@ -137,43 +120,15 @@ function startBreathing() {
     };
     cycle(); breathingInterval = setInterval(cycle, 10000);
 }
-// --- Feature 6: Fitness Logic ---
+
+// Fitness
 let steps = parseInt(localStorage.getItem('userSteps')) || 0;
-const stepGoal = 10000;
-
 function addSteps() {
-    const input = document.getElementById('step-input');
-    const amount = parseInt(input.value);
-    
-    if (amount > 0) {
-        steps += amount;
-        updateFitnessUI();
-        localStorage.setItem('userSteps', steps);
-        input.value = "";
-    }
+    const sInput = document.getElementById('step-input');
+    if (parseInt(sInput.value) > 0) { steps += parseInt(sInput.value); updateFitnessUI(); localStorage.setItem('userSteps', steps); sInput.value = ""; }
 }
-
-function resetSteps() {
-    if(confirm("Start a new fitness day?")) {
-        steps = 0;
-        updateFitnessUI();
-        localStorage.setItem('userSteps', 0);
-    }
-}
-
+function resetSteps() { steps = 0; updateFitnessUI(); localStorage.setItem('userSteps', 0); }
 function updateFitnessUI() {
-    const stepText = document.getElementById('current-steps');
-    const bar = document.getElementById('step-progress');
-    
-    if(stepText && bar) {
-        stepText.innerText = steps.toLocaleString();
-        let percentage = Math.min((steps / stepGoal) * 100, 100);
-        bar.style.width = percentage + "%";
-        
-        if (steps >= stepGoal) {
-            stepText.style.color = "#4db6ac"; // Turns green when goal met
-        }
-    }
+    if(document.getElementById('current-steps')) document.getElementById('current-steps').innerText = steps.toLocaleString();
+    if(document.getElementById('step-progress')) document.getElementById('step-progress').style.width = Math.min((steps / 10000) * 100, 100) + "%";
 }
-
-// Add 'updateFitnessUI();' to your window.onload function at the top!
