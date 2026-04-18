@@ -23,8 +23,10 @@
             <div id="dashboard-content">
                 <div class="wellness-card">
                     <small>DAILY AFFIRMATION</small>
-                    <p id="affirmation-text">"Loading magic..."</p>
+                    <p id="affirmation-text">"Everything is falling into place. 🎀"</p>
                 </div>
+
+                <div class="badges-row" id="badge-display"></div>
 
                 <div class="input-section">
                     <input type="text" id="todo-input" placeholder="What's the plan?">
@@ -59,7 +61,8 @@
             <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
             <div class="glass-inner">
                 <div class="display-circle"><div id="plant-display" style="font-size: 4rem;">🌱</div></div>
-                <p>Glasses: <span id="water-count">0</span>/8</p>
+                <p>Target: <input type="number" id="water-goal-input" class="inline-input" onchange="updateWaterGoal()"> glasses</p>
+                <p>Current: <span id="water-count">0</span></p>
                 <div class="controls">
                     <button class="main-btn" style="background: #4db6ac;" onclick="addWater()">Drink 💧</button>
                     <button class="secondary-btn" onclick="resetWater()">Reset</button>
@@ -75,7 +78,7 @@
                     <button class="main-btn" style="background: #ba68c8; margin-top:10px;" onclick="unlockDiary()">Unlock</button>
                 </div>
                 <div id="diary-open" style="display: none; width: 100%;">
-                    <textarea id="diary-input" placeholder="Thoughts..."></textarea>
+                    <textarea id="diary-input"></textarea>
                     <button class="main-btn" style="background: #ba68c8;" onclick="saveDiary()">Save</button>
                 </div>
             </div>
@@ -94,7 +97,7 @@
             <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
             <div class="glass-inner">
                 <div class="breathe-circle"></div>
-                <p id="breathe-text" style="font-weight: 600;">Ready?</p>
+                <p id="breathe-text">Ready?</p>
                 <button class="main-btn" onclick="startBreathing()" id="breathe-btn" style="background: #90caf9;">Start</button>
             </div>
         </section>
@@ -102,11 +105,9 @@
         <section id="fitness-tab" class="tab-content">
             <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
             <div class="glass-inner">
-                <h2 style="color: #ff7043; margin-bottom: 10px;">movement log 👟</h2>
-                <div class="progress-container">
-                    <div id="step-progress" class="progress-bar"></div>
-                </div>
-                <p style="font-weight: 600;"><span id="current-steps">0</span> / 10,000 steps</p>
+                <h2 style="color: #ff7043;">movement log 👟</h2>
+                <div class="progress-container"><div id="step-progress" class="progress-bar"></div></div>
+                <p><span id="current-steps">0</span> / <input type="number" id="step-goal-input" class="inline-input" onchange="updateStepGoal()"> steps</p>
                 <div class="input-section" style="margin-top:20px;">
                     <input type="number" id="step-input" placeholder="Steps...">
                     <button class="main-btn" style="background: #ff7043;" onclick="addSteps()">Add</button>
@@ -114,17 +115,6 @@
                 <button class="secondary-btn" onclick="resetSteps()" style="margin-top: 15px;">New Day</button>
             </div>
         </section>
-        <div class="badges-row" id="badge-display">
-        </div>
-
-        <section id="fitness-tab" class="tab-content">
-            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
-            <div class="glass-inner">
-                <h2 style="color: #ff7043;">movement log 👟</h2>
-                <div class="progress-container"><div id="step-progress" class="progress-bar"></div></div>
-                <p><span id="current-steps">0</span> / <input type="number" id="step-goal-input" class="inline-input" onchange="updateStepGoal()"> steps</p>
-            </div>
-        </section>   
     </div>
     <script src="script.js"></script>
 </body>
