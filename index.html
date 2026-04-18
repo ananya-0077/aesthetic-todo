@@ -40,10 +40,10 @@
             <div class="feature-grid">
                 <div class="feature-item" onclick="showTab('focus-tab')"><span>🐰</span><small>Focus</small></div>
                 <div class="feature-item" onclick="showTab('water-tab')"><span>🌱</span><small>Water</small></div>
-                <div class="feature-item" onclick="showTab('vision-tab')"><span>🖼️</span><small>Vision</small></div>
-                <div class="feature-item" onclick="showTab('fitness-tab')"><span>👟</span><small>Fitness</small></div>
-                <div class="feature-item" onclick="showTab('breathe-tab')"><span>🌬️</span><small>Breathe</small></div>
                 <div class="feature-item" onclick="showTab('journal-tab')"><span>🔒</span><small>Diary</small></div>
+                <div class="feature-item" onclick="showTab('vision-tab')"><span>🖼️</span><small>Vision</small></div>
+                <div class="feature-item" onclick="showTab('breathe-tab')"><span>🌬️</span><small>Breathe</small></div>
+                <div class="feature-item" onclick="showTab('fitness-tab')"><span>👟</span><small>Fitness</small></div>
             </div>
 
             <h3 class="grid-label">STUDIO & STUDY</h3>
@@ -67,37 +67,14 @@
             </div>
         </section>
 
-        <section id="water-tab" class="tab-content">
-            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
-            <div class="glass-inner">
-                <div class="display-circle"><div id="plant-display">🌱</div></div>
-                <p>Target: <input type="number" id="water-goal-input" class="inline-input" onchange="updateWaterGoal()"></p>
-                <p>Current: <span id="water-count">0</span></p>
-                <div class="controls"><button class="main-btn" style="background:#4db6ac;" onclick="addWater()">Drink 💧</button><button class="secondary-btn" onclick="resetWater()">Reset</button></div>
-            </div>
-        </section>
-
-        <section id="fitness-tab" class="tab-content">
-            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
-            <div class="glass-inner">
-                <h2 style="color:#ff7043;">movement log 👟</h2>
-                <div class="progress-container"><div id="step-progress" class="progress-bar"></div></div>
-                <p><span id="current-steps">0</span> / <input type="number" id="step-goal-input" class="inline-input" onchange="updateStepGoal()"> steps</p>
-                <div class="pill-input-section" style="margin-top:20px;">
-                    <input type="number" id="step-input" placeholder="Add steps...">
-                    <button class="main-btn" style="background:#ff7043;" onclick="addSteps()">+</button>
-                </div>
-                <button class="secondary-btn" onclick="resetSteps()" style="margin-top: 15px;">New Day</button>
-            </div>
-        </section>
-
-        <section id="focus-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><div class="display-circle"><span id="timer-clock">25:00</span></div><button class="main-btn" id="start-timer">Start</button></div></section>
-        <section id="journal-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><textarea id="diary-input"></textarea><button class="main-btn" onclick="saveDiary()">Save</button></div></section>
-        <section id="vision-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><input type="text" id="vision-url" placeholder="Image URL"><button class="main-btn" onclick="addImage()">Add</button><div id="vision-grid" class="vision-grid"></div></div></section>
-        <section id="breathe-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><div class="breathe-circle"></div><p id="breathe-text">Ready?</p><button class="main-btn" onclick="startBreathing()">Start</button></div></section>
-        <section id="baking-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Baking Recipes 🧁</h2><p>Coming Soon...</p></div></section>
-        <section id="degree-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Degree Tracker 🎓</h2><p>Coming Soon...</p></div></section>
-
+        <section id="water-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><div class="display-circle">🌱</div><p>Target: <input type="number" id="water-goal-input" class="inline-input" onchange="updateWaterGoal()"> glasses</p><p>Current: <span id="water-count">0</span></p><button class="main-btn" onclick="addWater()">Drink 💧</button></div></section>
+        <section id="fitness-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Steps 👟</h2><div class="progress-container"><div id="step-progress" class="progress-bar"></div></div><p><span id="current-steps">0</span> / <input type="number" id="step-goal-input" class="inline-input" onchange="updateStepGoal()"> steps</p><button class="main-btn" onclick="addSteps()">Add 1000</button></div></section>
+        <section id="focus-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><div class="display-circle">25:00</div><button class="main-btn">Start</button></div></section>
+        <section id="vision-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Vision Board</h2><div id="vision-grid" class="vision-grid"></div></div></section>
+        <section id="journal-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Diary</h2><textarea id="diary-input"></textarea></div></section>
+        <section id="breathe-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><div class="breathe-circle"></div><button class="main-btn">Start</button></div></section>
+        <section id="baking-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Recipes 🧁</h2><p>No-Sugar Bliss Awaits...</p></div></section>
+        <section id="degree-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Degree Progress 🎓</h2><p>MIT-WPU ECE Tracker</p></div></section>
     </div>
     <script src="script.js"></script>
 </body>
