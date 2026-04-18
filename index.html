@@ -54,8 +54,8 @@
                 <div class="feature-item" onclick="showTab('focus-tab')"><span>🐰</span><small>Focus</small></div>
                 <div class="feature-item" onclick="showTab('water-tab')"><span>🌱</span><small>Water</small></div>
                 <div class="feature-item" onclick="showTab('gratitude-tab')"><span>🏺</span><small>Jar</small></div>
+                <div class="feature-item" onclick="showTab('vision-tab')"><span>🖼️</span><small>Vision</small></div>
                 <div class="feature-item" onclick="showTab('sleep-tab')"><span>☁️</span><small>Sleep</small></div>
-                <div class="feature-item" onclick="showTab('fitness-tab')"><span>👟</span><small>Fitness</small></div>
                 <div class="feature-item" onclick="showTab('journal-tab')"><span>🔒</span><small>Diary</small></div>
             </div>
 
@@ -67,23 +67,35 @@
             </div>
         </section>
 
-        <section id="gratitude-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner">
-            <div class="jar-visual">🏺</div><h2>Gratitude Jar</h2>
-            <input type="text" id="gratitude-input" placeholder="I'm grateful for..."><button class="main-btn" onclick="addGratitude()">Drop in Jar</button>
-            <div id="jar-notes" class="vision-grid"></div></div>
+        <section id="gratitude-tab" class="tab-content">
+            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+            <div class="glass-inner">
+                <div class="jar-visual">🏺</div>
+                <h2>Gratitude Jar</h2>
+                <div class="pill-input-section">
+                    <input type="text" id="gratitude-input" placeholder="I'm grateful for...">
+                    <button onclick="addGratitude()" class="add-note-btn">+</button>
+                </div>
+                <div id="jar-notes-display" class="notes-container"></div>
+            </div>
         </section>
 
-        <section id="sleep-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner">
-            <h2>Sleep & Dreams ☁️</h2><input type="number" id="sleep-hours" placeholder="Hours Slept"><textarea id="dream-input" placeholder="Dream details..."></textarea>
-            <button class="main-btn" onclick="saveSleep()">Log Night</button></div>
+        <section id="vision-tab" class="tab-content">
+            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+            <div class="glass-inner">
+                <h2>Vision Board 🖼️</h2>
+                <div class="pill-input-section">
+                    <input type="text" id="vision-url" placeholder="Paste image link...">
+                    <button class="main-btn" onclick="addImage()">Add</button>
+                </div>
+                <div id="vision-board-display" class="photo-masonry"></div>
+            </div>
         </section>
 
-        <section id="resin-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner">
-            <h2>Resin Orders 🎨</h2><div class="pill-input-section"><input type="text" id="order-name" placeholder="Name"><input type="text" id="order-item" placeholder="Item"><button class="main-btn" onclick="addOrder()">+</button></div>
-            <ul id="order-list" class="order-grid"></ul></div>
-        </section>
-
-        </div>
+        <section id="resin-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Orders 🎨</h2><div class="pill-input-section"><input type="text" id="order-name" placeholder="Name"><input type="text" id="order-item" placeholder="Item"><button class="main-btn" onclick="addOrder()">+</button></div><ul id="order-list" class="order-grid"></ul></div></section>
+        <section id="water-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><div class="display-circle">🌱</div><p>Current: <span id="water-count">0</span></p><button class="main-btn" onclick="addWater()">Drink 💧</button></div></section>
+        <section id="sleep-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><h2>Sleep ☁️</h2><textarea id="dream-input" placeholder="Dream details..."></textarea><button class="main-btn" onclick="saveSleep()">Save</button></div></section>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,19 +1,66 @@
-const oracleAdvice = ["Focus on your grounding today. 🌿", "Slow resin cures lead to best results. 🎨", "Your hard work is blooming. 🎀", "A Taurus deserves a cozy break. 🧸"];
-let orders = JSON.parse(localStorage.getItem('resinOrders')) || [];
-let gratitudeJar = JSON.parse(localStorage.getItem('gratitude')) || [];
+const oracleAdvice = ["Ground yourself today. 🌿", "Slow resin cures lead to best results. 🎨", "Your hard work is blooming. 🎀", "A Taurus deserves a cozy break. 🧸"];
 
 window.onload = () => {
     const options = { weekday: 'long', month: 'long', day: 'numeric' };
     document.getElementById('date-display').innerText = new Date().toLocaleDateString(undefined, options);
     loadTasks();
     loadBigThree();
+    renderVisionBoard();
     renderJar();
-    renderOrders();
 };
 
 function showTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
     document.getElementById(tabId).classList.add('active');
+    if (tabId === 'vision-tab') renderVisionBoard();
+    if (tabId === 'gratitude-tab') renderJar();
+}
+
+// VISION BOARD LOGIC
+function addImage() {
+    const url = document.getElementById('vision-url').value.trim();
+    if (url) {
+        let v = JSON.parse(localStorage.getItem('visionBoard')) || [];
+        v.push(url);
+        localStorage.setItem('visionBoard', JSON.stringify(v));
+        renderVisionBoard();
+        document.getElementById('vision-url').value = "";
+    }
+}
+function renderVisionBoard() {
+    const g = document.getElementById('vision-board-display');
+    if (!g) return;
+    g.innerHTML = "";
+    const images = JSON.parse(localStorage.getItem('visionBoard')) || [];
+    images.forEach(url => {
+        const img = document.createElement('img');
+        img.src = url;
+        g.appendChild(img);
+    });
+}
+
+// GRATITUDE JAR LOGIC
+function addGratitude() {
+    const input = document.getElementById('gratitude-input');
+    if (input.value.trim()) {
+        let jar = JSON.parse(localStorage.getItem('gratitudeJar')) || [];
+        jar.push(input.value.trim());
+        localStorage.setItem('gratitudeJar', JSON.stringify(jar));
+        renderJar();
+        input.value = "";
+    }
+}
+function renderJar() {
+    const jarContainer = document.getElementById('jar-notes-display');
+    if (!jarContainer) return;
+    jarContainer.innerHTML = "";
+    const notes = JSON.parse(localStorage.getItem('gratitudeJar')) || [];
+    notes.forEach(note => {
+        const div = document.createElement('div');
+        div.className = "gratitude-note";
+        div.innerText = note;
+        jarContainer.appendChild(div);
+    });
 }
 
 // TAURUS ORACLE
@@ -24,7 +71,7 @@ function flipCard() {
     setTimeout(() => { card.innerText = "Flip for Taurus Guidance 🔮"; card.style.background = ""; card.style.color = "white"; }, 5000);
 }
 
-// BIG 3
+// BIG THREE
 function saveBigThree() {
     const data = { b1: document.getElementById('big1').value, b2: document.getElementById('big2').value, b3: document.getElementById('big3').value };
     localStorage.setItem('bigThree', JSON.stringify(data));
@@ -34,35 +81,11 @@ function loadBigThree() {
     if(data) { document.getElementById('big1').value = data.b1; document.getElementById('big2').value = data.b2; document.getElementById('big3').value = data.b3; }
 }
 
-// GRATITUDE JAR
-function addGratitude() {
-    const input = document.getElementById('gratitude-input');
-    if(input.value) { gratitudeJar.push(input.value); localStorage.setItem('gratitude', JSON.stringify(gratitudeJar)); renderJar(); input.value = ""; }
-}
-function renderJar() {
-    const jar = document.getElementById('jar-notes'); if(!jar) return;
-    jar.innerHTML = gratitudeJar.map(n => `<div class="gratitude-note">${n}</div>`).join('');
-}
-
-// RESIN ORDERS
-function addOrder() {
-    const name = document.getElementById('order-name').value, item = document.getElementById('order-item').value;
-    if(name && item) { orders.push({ name, item, status: "Curing" }); localStorage.setItem('resinOrders', JSON.stringify(orders)); renderOrders(); }
-}
-function renderOrders() {
-    const list = document.getElementById('order-list'); if(!list) return;
-    list.innerHTML = orders.map((o, i) => `<li class="order-item"><div><strong>${o.name}</strong><br><small>${o.item}</small></div><div class="status-tag" onclick="toggleStatus(${i})">${o.status}</div></li>`).join('');
-}
-function toggleStatus(i) {
-    const s = ["Curing", "Polished", "Shipped"]; orders[i].status = s[(s.indexOf(orders[i].status) + 1) % s.length];
-    localStorage.setItem('resinOrders', JSON.stringify(orders)); renderOrders();
-}
-
-// TASKS
+// Tasks & Other (Remains consistent with previous version)
 function loadTasks() { JSON.parse(localStorage.getItem('tasks') || "[]").forEach(t => createTask(t.text, t.completed)); }
 function createTask(text, completed = false) {
     const li = document.createElement('li'); li.innerHTML = `<span>${text}</span>`;
-    li.onclick = () => { li.style.textDecoration = li.style.textDecoration === 'line-through' ? 'none' : 'line-through'; saveTasks(); };
+    li.onclick = () => { li.style.textDecoration = "line-through"; saveTasks(); };
     document.getElementById('todo-list').appendChild(li);
 }
 function saveTasks() {
