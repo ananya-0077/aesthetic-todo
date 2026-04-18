@@ -114,6 +114,17 @@
                 <button class="secondary-btn" onclick="resetSteps()" style="margin-top: 15px;">New Day</button>
             </div>
         </section>
+        <div class="badges-row" id="badge-display">
+        </div>
+
+        <section id="fitness-tab" class="tab-content">
+            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+            <div class="glass-inner">
+                <h2 style="color: #ff7043;">movement log 👟</h2>
+                <div class="progress-container"><div id="step-progress" class="progress-bar"></div></div>
+                <p><span id="current-steps">0</span> / <input type="number" id="step-goal-input" class="inline-input" onchange="updateStepGoal()"> steps</p>
+            </div>
+        </section>   
     </div>
     <script src="script.js"></script>
 </body>

@@ -63,3 +63,37 @@ input { width: 80%; padding: 10px; border-radius: 12px; border: none; background
 /* Breathe Circle */
 .breathe-circle { width: 80px; height: 80px; background: white; border-radius: 50%; transition: all 4s ease-in-out; margin-bottom: 25px; box-shadow: 0 0 20px rgba(255,255,255,0.8); }
 .breathe-expand { transform: scale(2.2); background: rgba(255,255,255,0.4); }
+/* Badge Row on Dashboard */
+.badges-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 10px 0;
+    min-height: 40px;
+}
+
+.badge-icon {
+    font-size: 1.5rem;
+    filter: grayscale(1); /* Grey until unlocked */
+    opacity: 0.3;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.badge-unlocked {
+    filter: grayscale(0);
+    opacity: 1;
+    transform: scale(1.2);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* Inline Input for Targets */
+.inline-input {
+    background: none;
+    border: none;
+    border-bottom: 1px dashed var(--accent-pink);
+    width: 60px;
+    text-align: center;
+    font-family: inherit;
+    font-weight: bold;
+    color: var(--text-color);
+}
