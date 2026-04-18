@@ -21,43 +21,44 @@ body {
 }
 
 .tab-content { display: none; }
-.tab-content.active { display: block !important; animation: fadeIn 0.4s ease; }
+.tab-content.active { display: block !important; }
 
-/* Dashboard Styling */
+/* Dashboard Styles */
 .wellness-card { background: rgba(255, 255, 255, 0.3); border-radius: 25px; padding: 15px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.4); }
 .badges-row { display: flex; justify-content: center; gap: 12px; margin-bottom: 10px; height: 35px; }
-.badge-icon { font-size: 1rem; opacity: 0.2; filter: grayscale(1); transition: 0.5s; background: rgba(255,255,255,0.5); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid white; }
-.badge-unlocked { opacity: 1; filter: grayscale(0); transform: scale(1.1); box-shadow: 0 0 10px rgba(255,255,255,0.8); background: white; }
+.badge-icon { font-size: 1rem; opacity: 0.2; filter: grayscale(1); transition: 0.5s; background: rgba(255,255,255,0.5); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+.badge-unlocked { opacity: 1; filter: grayscale(0); transform: scale(1.1); background: white; }
 
-/* Task Grid & Input */
+/* Oracle Card */
+.oracle-container { margin: 15px 0; perspective: 1000px; }
+.oracle-card {
+    background: linear-gradient(135deg, #f8bbd0 0%, #ce93d8 100%); color: white;
+    padding: 12px; border-radius: 15px; font-weight: 600; cursor: pointer; transition: 0.6s;
+}
+.flipped { transform: rotateY(180deg); background: white; color: var(--text); }
+
+/* Inputs & Task Grid */
 .pill-input-section { background: rgba(255, 255, 255, 0.5); padding: 8px 15px; border-radius: 30px; display: flex; align-items: center; margin-bottom: 15px; border: 1px solid white; }
 .pill-input-section input { background: none; border: none; outline: none; flex: 1; font-family: inherit; font-size: 0.9rem; color: var(--text); }
 #add-btn { background: var(--accent); color: white; border: none; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; }
-.task-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0; }
-.task-grid li { list-style: none; background: rgba(255,255,255,0.4); padding: 8px 12px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+.task-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0; margin-bottom: 20px; }
+.task-grid li { list-style: none; background: rgba(255,255,255,0.4); padding: 8px 12px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; display: flex; justify-content: space-between; }
 
-/* Icons Grid */
-.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 25px; }
-.feature-item { background: white; border-radius: 18px; padding: 12px 5px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-.feature-item span { font-size: 1.4rem; display: block; margin-bottom: 2px; }
+/* Grid Layouts */
+.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+.feature-item { background: white; border-radius: 18px; padding: 12px 5px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+.feature-item span { font-size: 1.4rem; display: block; }
 .feature-item small { font-size: 0.65rem; font-weight: 600; opacity: 0.8; }
+.grid-label { font-size: 0.75rem; margin: 10px 0; opacity: 0.6; letter-spacing: 1px; }
 
-/* Feature Tabs Interior */
-.glass-inner { background: rgba(255,255,255,0.2); border-radius: 30px; padding: 20px; min-height: 380px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.back-btn { background: none; border: none; color: var(--accent); font-weight: bold; cursor: pointer; margin-bottom: 10px; }
-.main-btn { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 15px; font-weight: bold; cursor: pointer; }
-.secondary-btn { background: white; border: 1px solid var(--accent); padding: 8px 15px; border-radius: 12px; cursor: pointer; font-size: 0.8rem; }
+/* Resin Orders */
+.order-item { background: white; margin-bottom: 8px; padding: 10px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; list-style: none; font-size: 0.8rem; }
+.status-tag { background: #e1f5fe; color: #0288d1; padding: 4px 8px; border-radius: 8px; font-size: 0.6rem; font-weight: bold; cursor: pointer; }
+
+/* Utils */
+.glass-inner { background: rgba(255,255,255,0.2); border-radius: 30px; padding: 20px; min-height: 380px; display: flex; flex-direction: column; align-items: center; }
 .inline-input { background: rgba(255,255,255,0.5); border: none; border-radius: 5px; width: 60px; text-align: center; font-family: inherit; font-weight: bold; }
-
-/* Progress Bar */
+.main-btn { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 15px; font-weight: bold; cursor: pointer; }
+.back-btn { background: none; border: none; color: var(--accent); font-weight: bold; cursor: pointer; margin-bottom: 10px; }
 .progress-container { width: 100%; height: 12px; background: rgba(0,0,0,0.05); border-radius: 10px; overflow: hidden; margin: 15px 0; border: 1px solid white; }
 .progress-bar { height: 100%; background: linear-gradient(90deg, #ff7043, #ffab91); transition: width 0.8s ease; width: 0%; }
-
-/* Vision Board */
-.vision-grid { column-count: 2; column-gap: 8px; margin-top: 15px; width: 100%; max-height: 300px; overflow-y: auto; }
-.vision-img { width: 100%; border-radius: 10px; margin-bottom: 8px; display: block; }
-
-/* Breathe */
-.breathe-circle { width: 70px; height: 70px; background: white; border-radius: 50%; transition: all 4s ease-in-out; margin-bottom: 20px; box-shadow: 0 0 20px white; }
-.breathe-expand { transform: scale(2.3); background: rgba(255,255,255,0.4); }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }

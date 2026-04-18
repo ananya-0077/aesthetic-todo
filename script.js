@@ -1,10 +1,10 @@
 const affirmations = ["Ananya, you are doing great! ✨", "Focus on the step, not the mountain. 🏔️", "Everything is falling into place. 🎀"];
-const plants = ["🌱", "🌿", "🪴", "🍀", "🌳", "🌻", "🌈"];
-let breathingInterval = null;
+const oracleAdvice = ["Ground yourself today. Touch grass. 🌿", "Slow and steady wins the race. 🎨", "Your hard work deserves a reward. 🧸"];
 
 let goals = JSON.parse(localStorage.getItem('userGoals')) || { steps: 10000, water: 8 };
 let steps = parseInt(localStorage.getItem('userSteps')) || 0;
 let waterCount = parseInt(localStorage.getItem('waterCount')) || 0;
+let orders = JSON.parse(localStorage.getItem('resinOrders')) || [];
 
 window.onload = () => {
     const options = { weekday: 'long', month: 'long', day: 'numeric' };
@@ -12,8 +12,9 @@ window.onload = () => {
     document.getElementById('affirmation-text').innerText = affirmations[Math.floor(Math.random() * affirmations.length)];
     loadTasks();
     updateWaterUI();
-    renderVisionBoard();
     updateFitnessUI();
+    renderOrders();
+    checkBadges();
 };
 
 function showTab(tabId) {
@@ -24,72 +25,59 @@ function showTab(tabId) {
     else { h.style.display = 'none'; d.style.display = 'none'; }
 }
 
+// TAURUS ORACLE
+function flipCard() {
+    const card = document.getElementById('oracle-card');
+    card.classList.add('flipped');
+    card.innerText = oracleAdvice[Math.floor(Math.random() * oracleAdvice.length)];
+    setTimeout(() => { card.classList.remove('flipped'); card.innerText = "Flip for Guidance 🔮"; }, 5000);
+}
+
+// RESIN ORDERS
+function addOrder() {
+    const name = document.getElementById('order-name').value;
+    const item = document.getElementById('order-item').value;
+    if(name && item) {
+        orders.push({ name, item, status: "Curing" });
+        localStorage.setItem('resinOrders', JSON.stringify(orders));
+        renderOrders();
+        document.getElementById('order-name').value = ""; document.getElementById('order-item').value = "";
+    }
+}
+
+function renderOrders() {
+    const list = document.getElementById('order-list');
+    if(!list) return;
+    list.innerHTML = "";
+    orders.forEach((o, i) => {
+        const li = document.createElement('li');
+        li.className = "order-item";
+        li.innerHTML = `<div><strong>${o.name}</strong><br><small>${o.item}</small></div><div class="status-tag" onclick="toggleStatus(${i})">${o.status}</div>`;
+        list.appendChild(li);
+    });
+}
+
+function toggleStatus(i) {
+    const s = ["Curing", "Polished", "Shipped"];
+    orders[i].status = s[(s.indexOf(orders[i].status) + 1) % s.length];
+    localStorage.setItem('resinOrders', JSON.stringify(orders));
+    renderOrders();
+}
+
+// BADGES & CORE WELLNESS
 function checkBadges() {
-    const row = document.getElementById('badge-display');
-    if (!row) return;
+    const row = document.getElementById('badge-display'); if(!row) return;
     row.innerHTML = "";
-    const badgeList = [
-        { icon: '🏆', condition: steps >= goals.steps },
-        { icon: '💎', condition: waterCount >= goals.water },
-        { icon: '🎀', condition: document.querySelectorAll('#todo-list li span[style*="line-through"]').length >= 3 }
-    ];
+    const badgeList = [{ i: '🏆', c: steps >= goals.steps }, { i: '💎', c: waterCount >= goals.water }, { i: '🎀', c: document.querySelectorAll('#todo-list li span[style*="line-through"]').length >= 3 }];
     badgeList.forEach(b => {
-        const span = document.createElement('span');
-        span.innerText = b.icon;
-        span.className = `badge-icon ${b.condition ? 'badge-unlocked' : ''}`;
+        const span = document.createElement('span'); span.innerText = b.i;
+        span.className = `badge-icon ${b.c ? 'badge-unlocked' : ''}`;
         row.appendChild(span);
     });
 }
 
-function triggerReward(msg) {
-    alert(msg);
-    checkBadges();
-}
-
-// Tasks
-const tInput = document.getElementById('todo-input');
-document.getElementById('add-btn').onclick = () => {
-    if (tInput.value.trim()) { createTask(tInput.value); saveTasks(); tInput.value = ""; }
-};
-function createTask(text, completed = false) {
-    const li = document.createElement('li');
-    li.innerHTML = `<span style="${completed ? 'text-decoration:line-through; opacity:0.5' : ''}">${text}</span><span style="opacity:0.2">✨</span>`;
-    li.onclick = () => {
-        const s = li.querySelector('span');
-        s.style.textDecoration = s.style.textDecoration === 'line-through' ? 'none' : 'line-through';
-        s.style.opacity = s.style.opacity === '0.5' ? '1' : '0.5';
-        saveTasks(); checkBadges();
-    };
-    document.getElementById('todo-list').appendChild(li);
-}
-function saveTasks() {
-    const tasks = [];
-    document.querySelectorAll('#todo-list li span:first-child').forEach(s => tasks.push({text: s.innerText, completed: s.style.textDecoration === 'line-through'}));
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-}
-function loadTasks() { JSON.parse(localStorage.getItem('tasks') || "[]").forEach(t => createTask(t.text, t.completed)); }
-
-// Water
-function updateWaterGoal() { goals.water = parseInt(document.getElementById('water-goal-input').value) || 8; localStorage.setItem('userGoals', JSON.stringify(goals)); updateWaterUI(); }
-function addWater() { 
-    waterCount++; localStorage.setItem('waterCount', waterCount); updateWaterUI(); 
-    if(waterCount === goals.water) triggerReward("💎 CRYSTAL DROP UNLOCKED! Perfect hydration, Ananya!");
-}
-function resetWater() { waterCount = 0; localStorage.setItem('waterCount', 0); updateWaterUI(); }
-function updateWaterUI() {
-    if(document.getElementById('water-count')) document.getElementById('water-count').innerText = waterCount;
-    if(document.getElementById('water-goal-input')) document.getElementById('water-goal-input').value = goals.water;
-    const p = document.getElementById('plant-display');
-    if(p) p.innerText = plants[Math.min(Math.floor(waterCount / (goals.water/6)), plants.length - 1)];
-    checkBadges();
-}
-
-// Fitness
 function updateStepGoal() { goals.steps = parseInt(document.getElementById('step-goal-input').value) || 10000; localStorage.setItem('userGoals', JSON.stringify(goals)); updateFitnessUI(); }
-function addSteps() { 
-    const val = parseInt(document.getElementById('step-input').value); 
-    if (val > 0) { steps += val; localStorage.setItem('userSteps', steps); updateFitnessUI(); document.getElementById('step-input').value = ""; if(steps >= goals.steps && steps < goals.steps + val) triggerReward("🏆 MOVEMENT MASTER! Goal crushed!"); } 
-}
+function addSteps() { const val = parseInt(document.getElementById('step-input').value); if (val > 0) { steps += val; localStorage.setItem('userSteps', steps); updateFitnessUI(); document.getElementById('step-input').value = ""; } }
 function resetSteps() { steps = 0; localStorage.setItem('userSteps', 0); updateFitnessUI(); }
 function updateFitnessUI() {
     if(document.getElementById('current-steps')) document.getElementById('current-steps').innerText = steps.toLocaleString();
@@ -99,10 +87,22 @@ function updateFitnessUI() {
     checkBadges();
 }
 
-// Rest (Diary, Vision, Breathe, Timer)
-function unlockDiary() { if (document.getElementById('diary-pin').value === "1234") { document.getElementById('diary-lock').style.display = 'none'; document.getElementById('diary-open').style.display = 'block'; document.getElementById('diary-input').value = localStorage.getItem('secretNote') || ""; } else { alert("Wrong PIN! 🎀"); } }
-function saveDiary() { localStorage.setItem('secretNote', document.getElementById('diary-input').value); alert("Saved! ✨"); }
-function addImage() { const url = document.getElementById('vision-url').value.trim(); if (url) { let v = JSON.parse(localStorage.getItem('visionImages') || "[]"); v.push(url); localStorage.setItem('visionImages', JSON.stringify(v)); renderVisionBoard(); document.getElementById('vision-url').value = ""; } }
-function renderVisionBoard() { const g = document.getElementById('vision-grid'); if(!g) return; g.innerHTML = ""; JSON.parse(localStorage.getItem('visionImages') || "[]").forEach(url => { const img = document.createElement('img'); img.src = url; img.className = 'vision-img'; g.appendChild(img); }); }
-function startBreathing() { const circle = document.querySelector('.breathe-circle'), text = document.getElementById('breathe-text'), btn = document.getElementById('breathe-btn'); if (breathingInterval) { clearInterval(breathingInterval); breathingInterval = null; circle.classList.remove('breathe-expand'); text.innerText = "Ready?"; btn.innerText = "Start"; return; } btn.innerText = "Stop"; const cycle = () => { text.innerText = "Inhale..."; circle.classList.add('breathe-expand'); setTimeout(() => { text.innerText = "Hold..."; setTimeout(() => { text.innerText = "Exhale..."; circle.classList.remove('breathe-expand'); }, 2000); }, 4000); }; cycle(); breathingInterval = setInterval(cycle, 10000); }
-let timeLeft = 25 * 60, timerId = null; const timerClock = document.getElementById('timer-clock'); const startBtn = document.getElementById('start-timer'); startBtn.onclick = () => { if (timerId) { clearInterval(timerId); timerId = null; startBtn.innerText = "Start"; } else { startBtn.innerText = "Pause"; timerId = setInterval(() => { timeLeft--; let mins = Math.floor(timeLeft / 60), secs = timeLeft % 60; timerClock.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`; if (timeLeft <= 0) { clearInterval(timerId); alert("Break time, Ananya! 🌸"); } }, 1000); } }; document.getElementById('reset-timer').onclick = () => { clearInterval(timerId); timerId = null; timeLeft = 25 * 60; timerClock.innerText = "25:00"; startBtn.innerText = "Start"; };
+function updateWaterGoal() { goals.water = parseInt(document.getElementById('water-goal-input').value) || 8; localStorage.setItem('userGoals', JSON.stringify(goals)); updateWaterUI(); }
+function addWater() { waterCount++; localStorage.setItem('waterCount', waterCount); updateWaterUI(); }
+function resetWater() { waterCount = 0; localStorage.setItem('waterCount', 0); updateWaterUI(); }
+function updateWaterUI() {
+    if(document.getElementById('water-count')) document.getElementById('water-count').innerText = waterCount;
+    if(document.getElementById('water-goal-input')) document.getElementById('water-goal-input').value = goals.water;
+    checkBadges();
+}
+
+// Tasks
+function createTask(text, completed = false) {
+    const li = document.createElement('li');
+    li.innerHTML = `<span style="${completed ? 'text-decoration:line-through; opacity:0.5' : ''}">${text}</span><span>✨</span>`;
+    li.onclick = () => { const s = li.querySelector('span'); s.style.textDecoration = s.style.textDecoration === 'line-through' ? 'none' : 'line-through'; saveTasks(); checkBadges(); };
+    document.getElementById('todo-list').appendChild(li);
+}
+function saveTasks() { const tasks = []; document.querySelectorAll('#todo-list li span:first-child').forEach(s => tasks.push({text: s.innerText, completed: s.style.textDecoration === 'line-through'})); localStorage.setItem('tasks', JSON.stringify(tasks)); }
+function loadTasks() { JSON.parse(localStorage.getItem('tasks') || "[]").forEach(t => createTask(t.text, t.completed)); }
+document.getElementById('add-btn').onclick = () => { const t = document.getElementById('todo-input'); if(t.value) { createTask(t.value); saveTasks(); t.value = ""; } };
