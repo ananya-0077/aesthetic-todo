@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div id="toast-container"></div>
     <div class="background-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
 
     <div class="app-container">
@@ -65,25 +66,15 @@
             </div>
         </section>
 
-        <section id="fitness-tab" class="tab-content">
-            <button class="back-btn">← Back</button>
-            <div class="glass-inner">
-                <h2>Movement 👟</h2>
-                <div class="progress-container"><div id="f-bar" class="progress-bar"></div></div>
-                <p><span id="f-now">0</span> / <input type="number" id="f-goal" class="inline-input" value="10000"> steps</p>
-                <div class="controls-row">
-                    <button class="main-btn" id="f-add">+1k Steps</button>
-                    <button class="secondary-btn" id="f-reset">Reset</button>
-                </div>
-            </div>
-        </section>
-
         <section id="gratitude-tab" class="tab-content">
             <button class="back-btn">← Back</button>
             <div class="glass-inner">
                 <h2>Gratitude Jar 🏺</h2>
-                <div class="pill-input-section"><input type="text" id="jar-input" placeholder="Grateful for..."><button id="jar-add">+</button></div>
-                <div id="jar-grid" class="notes-container"></div>
+                <div class="pill-input-section">
+                    <input type="text" id="j-in" placeholder="Grateful for...">
+                    <button id="j-add">+</button>
+                </div>
+                <div id="j-list" class="notes-container"></div>
             </div>
         </section>
 
@@ -96,21 +87,32 @@
                     <button class="m-opt" data-color="#90caf9">😴</button>
                     <button class="m-opt" data-color="#b39ddb">🧘</button>
                 </div>
-                <p id="mood-txt">Pick your vibe</p>
+                <p id="m-status">Pick your vibe</p>
             </div>
         </section>
 
-        <section id="alarm-tab" class="tab-content">
+        <section id="degree-tab" class="tab-content">
             <button class="back-btn">← Back</button>
             <div class="glass-inner">
-                <h2>Reminders ⏰</h2>
-                <div class="display-circle" id="big-clock">00:00:00</div>
-                <input type="time" id="al-time" class="full-pill"><input type="text" id="al-msg" placeholder="Remind me to..." class="full-pill">
-                <button class="main-btn" id="al-set">Set Alarm</button>
+                <h2>ECE Tracker 🎓</h2>
+                <div class="progress-container"><div id="deg-bar" class="progress-bar"></div></div>
+                <div class="pill-input-section">
+                    <input type="text" id="deg-in" placeholder="New Sub...">
+                    <button id="deg-add">+</button>
+                </div>
+                <ul id="deg-list" class="task-grid" style="width:100%"></ul>
             </div>
         </section>
 
-        </div>
+        <section id="focus-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Focus 🐰</h2><div class="display-circle">25:00</div></div></section>
+        <section id="vision-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Vision 🖼️</h2></div></section>
+        <section id="breathe-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Breathe 🌬️</h2></div></section>
+        <section id="fitness-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Fitness 👟</h2></div></section>
+        <section id="sleep-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Sleep ☁️</h2></div></section>
+        <section id="journal-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Diary 🔒</h2></div></section>
+        <section id="alarm-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Alarm ⏰</h2></div></section>
+        <section id="resin-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner"><h2>Orders ✨</h2></div></section>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

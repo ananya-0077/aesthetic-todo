@@ -1,78 +1,88 @@
 // DATA PERSISTENCE
-let wNow = parseInt(localStorage.getItem('w_now')) || 0;
-let fNow = parseInt(localStorage.getItem('f_now')) || 0;
-let jar = JSON.parse(localStorage.getItem('jar_notes')) || [];
-let alarmT = null;
+let water = parseInt(localStorage.getItem('w_val')) || 0;
+let jar = JSON.parse(localStorage.getItem('j_val')) || [];
+let ece = JSON.parse(localStorage.getItem('e_val')) || [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Initial UI Setup
     updateUI();
-    document.getElementById('date-display').innerText = new Date().toLocaleDateString(undefined, {weekday: 'long', month: 'long', day: 'numeric'});
+    const options = { weekday: 'long', month: 'long', day: 'numeric' };
+    document.getElementById('date-display').innerText = new Date().toLocaleDateString(undefined, options);
 
-    // 2. Navigation Logic
+    // NAVIGATION
     document.querySelectorAll('.feature-item').forEach(item => {
-        item.addEventListener('click', () => {
-            const target = item.getAttribute('data-tab');
+        item.onclick = () => {
+            const tab = item.getAttribute('data-tab');
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.getElementById(target).classList.add('active');
+            document.getElementById(tab).classList.add('active');
             document.getElementById('main-header').style.display = 'none';
-        });
+        };
     });
 
     document.querySelectorAll('.back-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.onclick = () => {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.getElementById('dashboard').classList.add('active');
             document.getElementById('main-header').style.display = 'block';
             updateUI();
-        });
+        };
     });
 
-    // 3. Water Logic
-    document.getElementById('w-add').onclick = () => { wNow++; localStorage.setItem('w_now', wNow); updateUI(); };
-    document.getElementById('w-reset').onclick = () => { wNow = 0; localStorage.setItem('w_now', 0); updateUI(); };
+    // WATER LOGIC
+    document.getElementById('w-add').onclick = () => { 
+        water++; 
+        save('w_val', water); 
+        updateUI(); 
+        const goal = document.getElementById('w-goal').value;
+        if(water == goal) showToast("💎 Water Goal Reached!");
+    };
+    document.getElementById('w-reset').onclick = () => { water = 0; save('w_val', 0); updateUI(); };
 
-    // 4. Fitness Logic
-    document.getElementById('f-add').onclick = () => { fNow += 1000; localStorage.setItem('f_now', fNow); updateUI(); };
-    document.getElementById('f-reset').onclick = () => { fNow = 0; localStorage.setItem('f_now', 0); updateUI(); };
-
-    // 5. Jar Logic
-    document.getElementById('jar-add').onclick = () => {
-        const val = document.getElementById('jar-input').value;
-        if(val) { jar.push(val); localStorage.setItem('jar_notes', JSON.stringify(jar)); renderJar(); document.getElementById('jar-input').value = ""; }
+    // JAR LOGIC
+    document.getElementById('j-add').onclick = () => {
+        const val = document.getElementById('j-in').value;
+        if(val) { jar.push(val); save('j_val', jar); renderJar(); document.getElementById('j-in').value = ""; }
     };
 
-    // 6. Mood Logic
+    // MOOD LOGIC
     document.querySelectorAll('.m-opt').forEach(btn => {
         btn.onclick = () => {
             const color = btn.getAttribute('data-color');
             document.body.style.background = `linear-gradient(135deg, ${color} 0%, #e1f5fe 100%)`;
-            document.getElementById('mood-txt').innerText = "Vibe updated! ✨";
+            document.getElementById('m-status').innerText = "Vibe updated! ✨";
+            showToast("Mood Set!");
         };
     });
 
-    // 7. Alarm logic
-    document.getElementById('al-set').onclick = () => { alarmT = document.getElementById('al-time').value; alert("Alarm Set! 🔔"); };
+    // DEGREE LOGIC
+    document.getElementById('deg-add').onclick = () => {
+        const val = document.getElementById('deg-in').value;
+        if(val) { ece.push({n: val, d: false}); save('e_val', ece); renderECE(); document.getElementById('deg-in').value = ""; }
+    };
 
-    renderJar();
+    renderJar(); renderECE();
 });
 
-function updateUI() {
-    document.getElementById('w-now').innerText = wNow;
-    document.getElementById('f-now').innerText = fNow.toLocaleString();
-    const fGoal = parseInt(document.getElementById('f-goal').value);
-    document.getElementById('f-bar').style.width = Math.min((fNow / fGoal) * 100, 100) + "%";
+function updateUI() { document.getElementById('w-now').innerText = water; }
+
+function renderJar() { 
+    const list = document.getElementById('j-list');
+    if(!list) return;
+    list.innerHTML = jar.map(n => `<div class="gratitude-note">${n}</div>`).join(''); 
 }
 
-function renderJar() {
-    const g = document.getElementById('jar-grid');
-    if(!g) return;
-    g.innerHTML = jar.map(n => `<div class="gratitude-note" style="background:#fff9c4; padding:8px; margin:5px; border-radius:5px; font-size:0.7rem;">${n}</div>`).join('');
+function renderECE() {
+    const list = document.getElementById('deg-list');
+    if(!list) return;
+    const done = ece.filter(s => s.d).length;
+    list.innerHTML = ece.map((s, i) => `<li style="background:white; padding:10px; border-radius:10px; list-style:none; margin:5px; cursor:pointer; opacity:${s.d?0.5:1}" onclick="toggleECE(${i})">${s.n} ${s.d?'✅':'⏳'}</li>`).join('');
+    document.getElementById('deg-bar').style.width = ece.length ? (done/ece.length)*100 + "%" : "0%";
 }
+
+window.toggleECE = (i) => { ece[i].d = !ece[i].d; save('e_val', ece); renderECE(); };
+function save(k, v) { localStorage.setItem(k, typeof v === 'object' ? JSON.stringify(v) : v); }
+function showToast(m) { const t = document.createElement('div'); t.className='toast'; t.innerText=m; document.getElementById('toast-container').appendChild(t); setTimeout(()=>t.remove(), 2500); }
 
 setInterval(() => {
     const t = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit', hour12: false});
     if(document.getElementById('mini-clock')) document.getElementById('mini-clock').innerText = t;
-    if(document.getElementById('big-clock')) document.getElementById('big-clock').innerText = t;
-    if(alarmT === t.substring(0,5)) { alert("⏰ REMINDER!"); alarmT = null; }
 }, 1000);
