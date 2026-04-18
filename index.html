@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ananya's Life Hub</title>
+    <title>Ananya's Lifestyle Hub</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -23,115 +23,71 @@
             <div id="dashboard-content">
                 <div class="wellness-card">
                     <div id="badge-display" class="badges-row"></div>
-                    <p id="affirmation-text">"Focus on the step, not the mountain. 🎀"</p>
+                    <p id="affirmation-text">"Everything is falling into place. 🎀"</p>
                 </div>
-
-                <div class="alarm-mini" onclick="showTab('alarm-tab')">
+                <div class="alarm-mini" id="mini-alarm-trigger">
                     <span id="mini-clock">00:00:00</span> 🔔
                 </div>
-
-                <div class="big-three-container">
-                    <small>DAILY BIG 3 ⚡</small>
-                    <div class="big-three-inputs">
-                        <input type="text" id="big1" placeholder="1. High Priority" onchange="saveBigThree()">
-                        <input type="text" id="big2" placeholder="2. Important" onchange="saveBigThree()">
-                        <input type="text" id="big3" placeholder="3. Must do" onchange="saveBigThree()">
-                    </div>
-                </div>
-
-                <div class="lofi-widget">
-                    <iframe width="100%" height="80" src="https://www.youtube.com/embed/jfKfPfyJRdk?controls=0" frameborder="0"></iframe>
-                </div>
-
-                <div class="oracle-container" onclick="flipCard()">
-                    <div id="oracle-card" class="oracle-card">Flip for Taurus Guidance 🔮</div>
-                </div>
-
                 <div class="pill-input-section">
                     <input type="text" id="todo-input" placeholder="Quick tasks...">
-                    <button id="add-btn">+</button>
+                    <button id="add-todo-btn">+</button>
                 </div>
                 <ul id="todo-list" class="task-grid"></ul>
             </div>
 
             <h3 class="grid-label">WELLNESS & LIFE</h3>
             <div class="feature-grid-9">
-                <div class="feature-item" onclick="showTab('focus-tab')"><span>🐰</span><small>Focus</small></div>
-                <div class="feature-item" onclick="showTab('water-tab')"><span>🌱</span><small>Water</small></div>
-                <div class="feature-item" onclick="showTab('gratitude-tab')"><span>🏺</span><small>Jar</small></div>
-                <div class="feature-item" onclick="showTab('vision-tab')"><span>🖼️</span><small>Vision</small></div>
-                <div class="feature-item" onclick="showTab('breathe-tab')"><span>🌬️</span><small>Breathe</small></div>
-                <div class="feature-item" onclick="showTab('fitness-tab')"><span>👟</span><small>Fitness</small></div>
-                <div class="feature-item" onclick="showTab('sleep-tab')"><span>☁️</span><small>Sleep</small></div>
-                <div class="feature-item" onclick="showTab('journal-tab')"><span>🔒</span><small>Diary</small></div>
-                <div class="feature-item" onclick="showTab('mood-tab')"><span>🎨</span><small>Mood</small></div>
+                <div class="feature-item" data-tab="focus-tab"><span>🐰</span><small>Focus</small></div>
+                <div class="feature-item" data-tab="water-tab"><span>🌱</span><small>Water</small></div>
+                <div class="feature-item" data-tab="gratitude-tab"><span>🏺</span><small>Jar</small></div>
+                <div class="feature-item" data-tab="vision-tab"><span>🖼️</span><small>Vision</small></div>
+                <div class="feature-item" data-tab="breathe-tab"><span>🌬️</span><small>Breathe</small></div>
+                <div class="feature-item" data-tab="fitness-tab"><span>👟</span><small>Fitness</small></div>
+                <div class="feature-item" data-tab="sleep-tab"><span>☁️</span><small>Sleep</small></div>
+                <div class="feature-item" data-tab="journal-tab"><span>🔒</span><small>Diary</small></div>
+                <div class="feature-item" data-tab="mood-tab"><span>🎨</span><small>Mood</small></div>
             </div>
 
             <h3 class="grid-label">STUDIO & STUDY</h3>
             <div class="feature-grid-3">
-                <div class="feature-item" onclick="showTab('resin-tab')"><span>✨</span><small>Orders</small></div>
-                <div class="feature-item" onclick="showTab('alarm-tab')"><span>⏰</span><small>Remind</small></div>
-                <div class="feature-item" onclick="showTab('degree-tab')"><span>🎓</span><small>Degree</small></div>
+                <div class="feature-item" data-tab="resin-tab"><span>✨</span><small>Orders</small></div>
+                <div class="feature-item" data-tab="alarm-tab"><span>⏰</span><small>Remind</small></div>
+                <div class="feature-item" data-tab="degree-tab"><span>🎓</span><small>Degree</small></div>
             </div>
         </section>
 
-        <section id="water-tab" class="tab-content">
-            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
-            <div class="glass-inner">
-                <div class="display-circle">🌱</div>
-                <div class="stats-group">
-                    <p>Target: <input type="number" id="water-goal-input" class="inline-input-sm" onchange="updateWaterGoal()"> glasses</p>
-                    <p>Current: <span id="water-count">0</span></p>
-                </div>
-                <div class="controls-row">
-                    <button class="main-btn" onclick="addWater()">Drink 💧</button>
-                    <button class="secondary-btn" onclick="resetWater()">Reset</button>
-                </div>
-            </div>
-        </section>
+        <section id="water-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner">
+            <div class="display-circle">🌱</div>
+            <p>Current: <span id="water-count">0</span> / 8</p>
+            <div class="controls-row"><button class="main-btn" id="drink-btn">Drink 💧</button><button class="secondary-btn" id="reset-water">Reset</button></div>
+        </div></section>
 
-        <section id="alarm-tab" class="tab-content">
-            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
-            <div class="glass-inner">
-                <h2>Reminders ⏰</h2>
-                <div class="display-circle" id="big-clock">00:00:00</div>
-                <div class="reminder-form">
-                    <label>Time:</label>
-                    <input type="time" id="alarm-time-input" class="full-pill-input">
-                    <label>Remind me to:</label>
-                    <input type="text" id="alarm-note" placeholder="ECE Lab / Resin Pour..." class="full-pill-input">
-                    <button class="main-btn" onclick="setAlarm()">Set Reminder</button>
-                    <p id="alarm-msg"></p>
-                </div>
-            </div>
-        </section>
+        <section id="sleep-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner">
+            <h2>Sleep Log ☁️</h2>
+            <input type="number" id="sleep-input" class="inline-input" placeholder="Hrs">
+            <textarea id="dream-input" placeholder="Dreams..."></textarea>
+            <button class="main-btn" id="save-sleep-btn">Log Night</button>
+        </div></section>
 
-        <section id="fitness-tab" class="tab-content">
-            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
-            <div class="glass-inner">
-                <h2>Fitness 👟</h2>
-                <div class="progress-container"><div id="step-progress" class="progress-bar"></div></div>
-                <div class="stats-group">
-                    <p><span id="current-steps">0</span> / <input type="number" id="step-goal-input" class="inline-input-sm" onchange="updateStepGoal()"> steps</p>
-                </div>
-                <div class="controls-row">
-                    <button class="main-btn" onclick="addSteps()">+1000 Steps</button>
-                    <button class="secondary-btn" onclick="resetSteps()">New Day</button>
-                </div>
-            </div>
-        </section>
+        <section id="journal-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner">
+            <h2>Private Diary 🔒</h2>
+            <div id="diary-lock"><input type="password" id="diary-pin" placeholder="PIN (1234)"><button class="main-btn" id="unlock-btn">Unlock</button></div>
+            <div id="diary-box" style="display:none; width:100%;"><textarea id="diary-text"></textarea><button class="main-btn" id="save-diary-btn">Save</button></div>
+        </div></section>
 
-        <section id="focus-tab" class="tab-content">
-            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
-            <div class="glass-inner">
-                <h2>Focus 🐰</h2>
-                <div class="display-circle"><span id="timer-clock">25:00</span></div>
-                <div class="controls-row">
-                    <button id="start-timer" class="main-btn">Start</button>
-                    <button id="reset-timer" class="secondary-btn">Reset</button>
-                </div>
-            </div>
-        </section>
+        <section id="alarm-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner">
+            <h2>Reminders ⏰</h2>
+            <div class="display-circle" id="big-clock">00:00:00</div>
+            <input type="time" id="alarm-time"><input type="text" id="alarm-note" placeholder="Note...">
+            <button class="main-btn" id="set-alarm-btn">Set</button>
+        </div></section>
+
+        <section id="degree-tab" class="tab-content"><button class="back-btn">← Back</button><div class="glass-inner">
+            <h2>ECE Tracker 🎓</h2>
+            <div class="progress-container"><div id="degree-bar" class="progress-bar"></div></div>
+            <div class="pill-input-section"><input type="text" id="sub-input"><button id="add-sub-btn">+</button></div>
+            <ul id="sub-list" class="task-grid"></ul>
+        </div></section>
 
         </div>
     <script src="script.js"></script>
