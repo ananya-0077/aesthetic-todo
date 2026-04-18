@@ -1,68 +1,31 @@
-const affirmations = [
-    "I am proud of how far I've come.",
-    "Ananya, you are doing great! ✨",
-    "Focus on the step, not the mountain. 🏔️",
-    "Everything is falling into place. 🎀"
-];
-
+const affirmations = ["Ananya, you are doing great! ✨", "Focus on the step, not the mountain. 🏔️", "Everything is falling into place. 🎀"];
 const plants = ["🌱", "🌿", "🪴", "🍀", "🌳", "🌻", "🌈"];
 let breathingInterval = null;
 
-// --- INITIALIZATION ---
 window.onload = () => {
-    // 1. Set Date
     const options = { weekday: 'long', month: 'long', day: 'numeric' };
     document.getElementById('date-display').innerText = new Date().toLocaleDateString(undefined, options);
-    
-    // 2. Set Random Affirmation
     document.getElementById('affirmation-text').innerText = affirmations[Math.floor(Math.random() * affirmations.length)];
-    
-    // 3. Load Data
     loadTasks();
     updateWaterUI();
     renderVisionBoard();
 };
 
-// --- NAVIGATION LOGIC (The Aesthetic Fix) ---
 function showTab(tabId) {
-    // 1. Hide all tabs
-    document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.classList.remove('active');
-    });
-
-    // 2. Show the selected tab
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
     document.getElementById(tabId).classList.add('active');
-
-    // 3. Hide Dashboard Header/Input when in a Feature
-    const dashboardContent = document.getElementById('dashboard-content');
-    if (tabId === 'dashboard') {
-        dashboardContent.style.display = 'block';
-    } else {
-        dashboardContent.style.display = 'none';
-    }
 }
 
-// --- TASK LOGIC ---
-const input = document.getElementById('todo-input');
+// Tasks
+const todoInput = document.getElementById('todo-input');
 const todoList = document.getElementById('todo-list');
-
 document.getElementById('add-btn').onclick = () => {
-    if (input.value.trim()) { 
-        createTask(input.value); 
-        saveTasks(); 
-        input.value = ""; 
-    }
+    if (todoInput.value.trim()) { createTask(todoInput.value); saveTasks(); todoInput.value = ""; }
 };
-
 function createTask(text, completed = false) {
     const li = document.createElement('li');
-    li.style.cssText = "list-style:none; background:white; margin:8px 0; padding:12px; border-radius:12px; display:flex; justify-content:space-between; align-items:center; box-shadow: 0 4px 10px rgba(0,0,0,0.02);";
-    
-    li.innerHTML = `
-        <span class="task-text" style="${completed ? 'text-decoration: line-through; opacity: 0.5;' : ''}">${text}</span> 
-        <button onclick="this.parentElement.remove(); saveTasks();" style="border:none; background:none; cursor:pointer; font-size:1.2rem;">☁️</button>
-    `;
-
+    li.style.cssText = "list-style:none; background:white; margin:8px 0; padding:10px; border-radius:12px; display:flex; justify-content:space-between; align-items:center;";
+    li.innerHTML = `<span style="${completed ? 'text-decoration:line-through; opacity:0.5' : ''}">${text}</span><button onclick="this.parentElement.remove(); saveTasks();" style="border:none; background:none; cursor:pointer;">☁️</button>`;
     li.onclick = (e) => {
         if(e.target.tagName !== 'BUTTON') {
             const s = li.querySelector('span');
@@ -73,46 +36,31 @@ function createTask(text, completed = false) {
     };
     todoList.appendChild(li);
 }
-
 function saveTasks() {
     const tasks = [];
-    document.querySelectorAll('#todo-list li span').forEach(s => {
-        tasks.push({text: s.innerText, completed: s.style.textDecoration === 'line-through'});
-    });
+    document.querySelectorAll('#todo-list li span').forEach(s => tasks.push({text: s.innerText, completed: s.style.textDecoration === 'line-through'}));
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
+function loadTasks() { JSON.parse(localStorage.getItem('tasks') || "[]").forEach(t => createTask(t.text, t.completed)); }
 
-function loadTasks() {
-    const saved = JSON.parse(localStorage.getItem('tasks') || "[]");
-    saved.forEach(t => createTask(t.text, t.completed));
-}
-
-// --- FEATURE 1: TIMER ---
+// Timer
 let timeLeft = 25 * 60, timerId = null;
 const timerClock = document.getElementById('timer-clock');
 const startBtn = document.getElementById('start-timer');
-
 if(startBtn) {
     startBtn.onclick = () => {
         if (timerId) { clearInterval(timerId); timerId = null; startBtn.innerText = "Start"; }
-        else { 
-            startBtn.innerText = "Pause"; 
-            timerId = setInterval(() => {
-                timeLeft--;
-                let mins = Math.floor(timeLeft / 60), secs = timeLeft % 60;
-                timerClock.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-                if (timeLeft <= 0) { clearInterval(timerId); alert("Study break time! 🌸"); }
-            }, 1000); 
-        }
+        else { startBtn.innerText = "Pause"; timerId = setInterval(() => {
+            timeLeft--;
+            let mins = Math.floor(timeLeft / 60), secs = timeLeft % 60;
+            timerClock.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            if (timeLeft <= 0) { clearInterval(timerId); alert("Break time! 🌸"); }
+        }, 1000); }
     };
 }
+document.getElementById('reset-timer').onclick = () => { clearInterval(timerId); timerId = null; timeLeft = 25 * 60; timerClock.innerText = "25:00"; startBtn.innerText = "Start"; };
 
-document.getElementById('reset-timer').onclick = () => { 
-    clearInterval(timerId); timerId = null; timeLeft = 25 * 60; 
-    timerClock.innerText = "25:00"; startBtn.innerText = "Start"; 
-};
-
-// --- FEATURE 2: WATER ---
+// Water
 let waterCount = localStorage.getItem('waterCount') || 0;
 function addWater() { if (waterCount < 8) { waterCount++; updateWaterUI(); localStorage.setItem('waterCount', waterCount); } }
 function resetWater() { waterCount = 0; updateWaterUI(); localStorage.setItem('waterCount', waterCount); }
@@ -122,7 +70,7 @@ function updateWaterUI() {
     if(p) p.innerText = plants[Math.min(Math.floor(waterCount / 1.2), plants.length - 1)];
 }
 
-// --- FEATURE 3: DIARY ---
+// Diary
 function unlockDiary() {
     if (document.getElementById('diary-pin').value === "1234") {
         document.getElementById('diary-lock').style.display = 'none';
@@ -130,18 +78,17 @@ function unlockDiary() {
         document.getElementById('diary-input').value = localStorage.getItem('secretNote') || "";
     } else { alert("Wrong PIN! 🎀"); }
 }
-function saveDiary() { localStorage.setItem('secretNote', document.getElementById('diary-input').value); alert("Saved safely! ✨"); }
+function saveDiary() { localStorage.setItem('secretNote', document.getElementById('diary-input').value); alert("Saved! ✨"); }
 
-// --- FEATURE 4: VISION BOARD ---
+// Vision Board
 function addImage() {
-    const urlInput = document.getElementById('vision-url');
-    const url = urlInput.value.trim();
+    const url = document.getElementById('vision-url').value.trim();
     if (url) {
         let v = JSON.parse(localStorage.getItem('visionImages') || "[]");
         v.push(url);
         localStorage.setItem('visionImages', JSON.stringify(v));
         renderVisionBoard();
-        urlInput.value = "";
+        document.getElementById('vision-url').value = "";
     }
 }
 function renderVisionBoard() {
@@ -154,36 +101,23 @@ function renderVisionBoard() {
     });
 }
 
-// --- FEATURE 5: BREATHE ---
+// Breathe
 function startBreathing() {
     const circle = document.querySelector('.breathe-circle');
     const text = document.getElementById('breathe-text');
     const btn = document.getElementById('breathe-btn');
-
     if (breathingInterval) {
-        clearInterval(breathingInterval);
-        breathingInterval = null;
-        circle.classList.remove('breathe-expand');
-        text.innerText = "Ready?";
-        btn.innerText = "Start";
+        clearInterval(breathingInterval); breathingInterval = null;
+        circle.classList.remove('breathe-expand'); text.innerText = "Ready?"; btn.innerText = "Start";
         return;
     }
-
     btn.innerText = "Stop";
     const cycle = () => {
-        text.innerText = "Inhale...";
-        circle.classList.add('breathe-expand');
+        text.innerText = "Inhale..."; circle.classList.add('breathe-expand');
         setTimeout(() => {
             text.innerText = "Hold...";
-            setTimeout(() => {
-                text.innerText = "Exhale...";
-                circle.classList.remove('breathe-expand');
-            }, 2000);
+            setTimeout(() => { text.innerText = "Exhale..."; circle.classList.remove('breathe-expand'); }, 2000);
         }, 4000);
     };
-    cycle();
-    breathingInterval = setInterval(cycle, 10000);
+    cycle(); breathingInterval = setInterval(cycle, 10000);
 }
-
-// Global Mood Function
-function setMood(e) { alert(`Mood: ${e} logged. Take care, Ananya! ✨`); }

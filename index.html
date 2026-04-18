@@ -14,35 +14,29 @@
     </div>
 
     <div class="app-container">
-        <header id="main-header">
-            <h1 id="app-title">today's goals ✨</h1>
-            <p id="date-display"></p>
-        </header>
-
         <section id="dashboard" class="tab-content active">
-           <div id="dashboard-content">
-                <header id="main-header">
-                    <h1>today's goals ✨</h1>
-                    <p id="date-display"></p>
-                </header>
+            <header id="main-header">
+                <h1>today's goals ✨</h1>
+                <p id="date-display"></p>
+            </header>
 
-                <div class="wellness-card">
-                    <small>DAILY AFFIRMATION</small>
-                    <p id="affirmation-text">"Loading magic..."</p>
-                </div>
-
-                <div class="input-section">
-                    <input type="text" id="todo-input" placeholder="Add a task...">
-                    <button id="add-btn">+</button>
-                </div>
-                <ul id="todo-list"></ul>
+            <div class="wellness-card">
+                <small>DAILY AFFIRMATION</small>
+                <p id="affirmation-text">"Loading magic..."</p>
             </div>
 
+            <div class="input-section">
+                <input type="text" id="todo-input" placeholder="Add a task...">
+                <button id="add-btn">+</button>
+            </div>
+            <ul id="todo-list"></ul>
+
             <div class="feature-grid">
-               <div class="feature-item" onclick="showTab('focus-tab')"><span>🐰</span><small>Focus</small></div>
-               <div class="feature-item" onclick="showTab('water-tab')"><span>🌱</span><small>Water</small></div>
-               <div class="feature-item" onclick="showTab('journal-tab')"><span>🔒</span><small>Diary</small></div>
-               <div class="feature-item" onclick="showTab('vision-tab')"><span>🖼️</span><small>Vision</small></div>
+                <div class="feature-item" onclick="showTab('focus-tab')"><span>🐰</span><small>Focus</small></div>
+                <div class="feature-item" onclick="showTab('water-tab')"><span>🌱</span><small>Water</small></div>
+                <div class="feature-item" onclick="showTab('journal-tab')"><span>🔒</span><small>Diary</small></div>
+                <div class="feature-item" onclick="showTab('vision-tab')"><span>🖼️</span><small>Vision</small></div>
+                <div class="feature-item" onclick="showTab('breathe-tab')"><span>🌬️</span><small>Breathe</small></div>
             </div>
         </section>
 
@@ -77,7 +71,7 @@
                     <button class="main-btn" style="background: #ba68c8; margin-top: 10px;" onclick="unlockDiary()">Unlock</button>
                 </div>
                 <div id="diary-open" style="display: none; width: 100%;">
-                    <textarea id="diary-input" placeholder="Write here..."></textarea>
+                    <textarea id="diary-input"></textarea>
                     <button class="main-btn" style="background: #ba68c8;" onclick="saveDiary()">Save</button>
                 </div>
             </div>
@@ -91,22 +85,17 @@
                 <div id="vision-grid" class="vision-grid"></div>
             </div>
         </section>
-        <div class="feature-item" onclick="showTab('breathe-tab')">
-           <span>🌬️</span>
-           <small>Breathe</small>
-        </div>
 
         <section id="breathe-tab" class="tab-content">
-           <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
-           <div class="glass-inner">
-               <div class="breathe-container">
+            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+            <div class="glass-inner">
+                <div class="breathe-container">
                     <div class="breathe-circle"></div>
                     <p id="breathe-text">Ready?</p>
-               </div>
-               <button class="main-btn" onclick="startBreathing()" id="breathe-btn">Start</button>
-           </div>
+                </div>
+                <button class="main-btn" onclick="startBreathing()" id="breathe-btn" style="background: #90caf9;">Start</button>
+            </div>
         </section>
-        
     </div>
     <script src="script.js"></script>
 </body>
