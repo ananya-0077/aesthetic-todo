@@ -47,7 +47,15 @@
                     <span>🐰</span>
                     <small>Study Bunny</small>
                 </div>
+                <div class="feature-item" onclick="showTab('water-tab')">
+                    <span>🌱</span>
+                    <small>Hydration</small>
                 </div>
+                <div class="feature-item" onclick="showTab('journal-tab')">
+                    <span>🔒</span>
+                    <small>Secret Diary</small>
+                </div>
+            </div>
 
             <div class="footer-icons">
                 <span>🎀</span>
@@ -57,35 +65,39 @@
         </section>
 
         <section id="focus-tab" class="tab-content">
-            <button class="back-btn" onclick="showTab('dashboard')">← Back to Home</button>
+            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
             <div class="glass-inner">
                 <h2 style="color: #ff8fab;">focus room 🐰</h2>
-                <div class="timer-display">
+                <div class="display-circle">
                     <span id="timer-clock">25:00</span>
                 </div>
-                <div class="timer-controls">
+                <div class="controls">
                     <button id="start-timer" class="main-btn">Start</button>
                     <button id="reset-timer" class="secondary-btn">Reset</button>
                 </div>
-                <p class="timer-subtext">Time to focus, Ananya! ✨</p>
             </div>
         </section>
-
-        <div class="feature-item" onclick="showTab('water-tab')">
-    <span>🌱</span>
-    <small>Hydration</small>
-</div>
 
         <section id="water-tab" class="tab-content">
             <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
             <div class="glass-inner">
                 <h2 style="color: #4db6ac;">hydration station 🌱</h2>
-                <div class="plant-container">
-                    <div id="plant-display" style="font-size: 5rem; margin: 20px 0;">🌱</div>
-                    <p>Glasses today: <span id="water-count">0</span>/8</p>
+                <div class="display-circle">
+                    <div id="plant-display" style="font-size: 4rem;">🌱</div>
                 </div>
-            <button class="main-btn" onclick="addWater()" style="background: #4db6ac;">Drink Water 💧</button>
-            <button class="secondary-btn" onclick="resetWater()">Reset</button>
+                <p>Glasses: <span id="water-count">0</span>/8</p>
+                <div class="controls">
+                    <button class="main-btn" style="background: #4db6ac;" onclick="addWater()">Drink 💧</button>
+                    <button class="secondary-btn" onclick="resetWater()">Reset</button>
+                </div>
+            </div>
+        </section>
+        
+        <section id="journal-tab" class="tab-content">
+            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+            <div class="glass-inner">
+                <h2>secret diary 🔒</h2>
+                <p>Coming soon...</p>
             </div>
         </section>
     </div>

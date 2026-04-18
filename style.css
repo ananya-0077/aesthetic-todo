@@ -18,18 +18,15 @@ body {
 }
 
 .background-blobs .blob {
-    position: absolute;
-    filter: blur(60px);
-    z-index: -1;
-    border-radius: 50%;
+    position: absolute; filter: blur(60px); z-index: -1; border-radius: 50%;
 }
 .blob-1 { width: 350px; height: 350px; background: #f8bbd0; top: 5%; left: 10%; }
 .blob-2 { width: 300px; height: 300px; background: #b3e5fc; bottom: 10%; right: 10%; }
 
 .app-container {
     background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
     border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 40px;
     width: 90%;
@@ -39,7 +36,6 @@ body {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
     text-align: center;
     overflow-y: auto;
-    position: relative;
 }
 
 .tab-content { display: none; }
@@ -47,7 +43,7 @@ body {
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Wellness Card */
+/* Wellness Card & Grid */
 .wellness-card {
     background: rgba(255, 255, 255, 0.3);
     border-radius: 20px;
@@ -56,79 +52,70 @@ body {
     border: 1px dashed var(--accent-pink);
 }
 
-/* Feature Grid */
 .feature-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
-    margin-top: 20px;
+    margin: 25px 0;
 }
 
 .feature-item {
     background: white;
     border-radius: 20px;
-    padding: 10px;
+    padding: 15px 5px;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0,0,0,0.03);
     transition: 0.3s;
 }
 
-.feature-item:hover { transform: scale(1.05); }
+.feature-item:hover { transform: translateY(-5px); }
+.feature-item span { font-size: 1.5rem; display: block; }
 
-/* Buttons & Inputs */
-input {
-    width: 70%;
-    padding: 12px;
-    border-radius: 15px;
-    border: none;
-    background: rgba(255,255,255,0.7);
-    margin-right: 5px;
+/* Standardizing the Inner Apps */
+.glass-inner {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    padding: 25px;
+    margin-top: 20px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
-#add-btn, .main-btn {
-    background: var(--accent-pink);
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 15px;
-    cursor: pointer;
-}
-
-.secondary-btn {
+.display-circle {
+    width: 160px;
+    height: 160px;
     background: white;
-    border: 1px solid var(--accent-pink);
-    padding: 10px 20px;
-    border-radius: 15px;
-    cursor: pointer;
-}
-
-/* Timer Specifics */
-.timer-display {
-    width: 150px;
-    height: 150px;
-    margin: 30px auto;
-    border: 4px solid var(--accent-pink);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2.5rem;
-    background: white;
+    margin: 20px 0;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+    border: 3px solid var(--accent-pink);
 }
 
-.back-btn { background: none; border: none; color: var(--accent-pink); cursor: pointer; margin-bottom: 20px; }
-/* Hydration Styling */
-.plant-container {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+#timer-clock { font-size: 2.5rem; font-weight: 600; }
+
+/* Inputs & Buttons */
+input { width: 70%; padding: 12px; border-radius: 15px; border: none; background: rgba(255,255,255,0.7); outline: none; }
+
+.main-btn {
+    background: var(--accent-pink); color: white; border: none;
+    padding: 12px 25px; border-radius: 15px; cursor: pointer; font-weight: 600;
 }
 
-#plant-display {
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.secondary-btn {
+    background: white; border: 1px solid var(--accent-pink);
+    padding: 10px 20px; border-radius: 15px; cursor: pointer; margin-left: 10px;
 }
 
-.grow-anim {
-    transform: scale(1.2);
-}
+.back-btn { background: none; border: none; color: var(--accent-pink); cursor: pointer; font-size: 1rem; }
+
+.footer-icons { margin-top: 30px; font-size: 1.5rem; letter-spacing: 10px; opacity: 0.6; }
+
+#plant-display { transition: transform 0.3s; }
+.grow-anim { transform: scale(1.2); }
