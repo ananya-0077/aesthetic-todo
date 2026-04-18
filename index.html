@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ananya's Wellness Sanctuary</title>
+    <title>Wellness Sanctuary</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -45,8 +45,17 @@
             </div>
         </section>
 
-        <section id="focus-tab" class="tab-content"><button class="back-btn" onclick="showTab('dashboard')">← Back</button><div class="glass-inner"><div class="display-circle"><span id="timer-clock">25:00</span></div><div class="controls"><button id="start-timer" class="main-btn">Start</button><button id="reset-timer" class="secondary-btn">Reset</button></div></div></section>
-        
+        <section id="focus-tab" class="tab-content">
+            <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
+            <div class="glass-inner">
+                <div class="display-circle"><span id="timer-clock">25:00</span></div>
+                <div class="controls">
+                    <button id="start-timer" class="main-btn">Start</button>
+                    <button id="reset-timer" class="secondary-btn">Reset</button>
+                </div>
+            </div>
+        </section>
+
         <section id="water-tab" class="tab-content">
             <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
             <div class="glass-inner">
@@ -60,28 +69,31 @@
         <section id="fitness-tab" class="tab-content">
             <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
             <div class="glass-inner">
-                <h2 style="color:#ff7043;">movement log</h2>
+                <h2 style="color:#ff7043; font-size: 1.2rem;">movement log</h2>
                 <div class="progress-container"><div id="step-progress" class="progress-bar"></div></div>
                 <p><span id="current-steps">0</span> / <input type="number" id="step-goal-input" class="inline-input" onchange="updateStepGoal()"> steps</p>
-                <div class="pill-input-section" style="margin-top:20px;"><input type="number" id="step-input" placeholder="Add steps..."><button class="main-btn" style="background:#ff7043; border-radius:50%; width:30px; height:30px;" onclick="addSteps()">+</button></div>
-                <button class="secondary-btn" onclick="resetSteps()" style="margin-top:15px;">New Day</button>
+                <div class="pill-input-section" style="margin-top:20px;">
+                    <input type="number" id="step-input" placeholder="Add steps...">
+                    <button class="main-btn" style="background:#ff7043; border-radius:50%; width:30px; height:30px;" onclick="addSteps()">+</button>
+                </div>
+                <button class="secondary-btn" onclick="resetSteps()" style="margin-top: 15px;">New Day</button>
             </div>
         </section>
 
         <section id="study-tab" class="tab-content">
             <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
-            <div class="glass-inner">
-                <div id="study-initial">
+            <div class="glass-inner study-container">
+                <div id="study-initial" class="study-box">
                     <textarea id="notes-input" placeholder="Paste ECE notes here..."></textarea>
                     <button class="main-btn" onclick="startQuiz()">Generate Quiz</button>
                 </div>
-                <div id="quiz-area" style="display:none; width:100%;">
+                <div id="quiz-area" class="study-box" style="display:none;">
                     <div class="quiz-card">
                         <p id="question-text"></p>
-                        <input type="text" id="answer-input" placeholder="Answer...">
+                        <input type="text" id="answer-input" placeholder="Type answer...">
                         <button class="main-btn" style="margin-top:10px;" onclick="checkAnswer()">Submit</button>
                     </div>
-                    <p style="margin-top:15px;">Study Score: <span id="quiz-score">0</span> ⭐</p>
+                    <div class="score-tag">Score: <span id="quiz-score">0</span> ⭐</div>
                 </div>
             </div>
         </section>

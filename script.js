@@ -14,6 +14,7 @@ window.onload = () => {
     updateWaterUI();
     renderVisionBoard();
     updateFitnessUI();
+    checkBadges();
 };
 
 function showTab(tabId) {
@@ -42,7 +43,6 @@ function checkBadges() {
     });
 }
 
-// INSTANT REWARDS
 function triggerReward(msg) {
     alert(msg);
     checkBadges();
@@ -74,10 +74,8 @@ function loadTasks() { JSON.parse(localStorage.getItem('tasks') || "[]").forEach
 // Water
 function updateWaterGoal() { goals.water = parseInt(document.getElementById('water-goal-input').value) || 8; localStorage.setItem('userGoals', JSON.stringify(goals)); updateWaterUI(); }
 function addWater() { 
-    waterCount++; 
-    localStorage.setItem('waterCount', waterCount); 
-    updateWaterUI(); 
-    if(waterCount === goals.water) triggerReward("💎 CRYSTAL DROP UNLOCKED! Perfect hydration, Ananya!");
+    waterCount++; localStorage.setItem('waterCount', waterCount); updateWaterUI(); 
+    if(waterCount === goals.water) triggerReward("💎 CRYSTAL DROP UNLOCKED! Hydration goal met! ✨");
 }
 function resetWater() { waterCount = 0; localStorage.setItem('waterCount', 0); updateWaterUI(); }
 function updateWaterUI() {
@@ -93,11 +91,8 @@ function updateStepGoal() { goals.steps = parseInt(document.getElementById('step
 function addSteps() { 
     const val = parseInt(document.getElementById('step-input').value); 
     if (val > 0) { 
-        steps += val; 
-        localStorage.setItem('userSteps', steps); 
-        updateFitnessUI(); 
-        document.getElementById('step-input').value = ""; 
-        if(steps >= goals.steps && steps < goals.steps + val) triggerReward("🏆 MOVEMENT MASTER! Goal crushed!");
+        steps += val; localStorage.setItem('userSteps', steps); updateFitnessUI(); document.getElementById('step-input').value = ""; 
+        if(steps >= goals.steps && steps < goals.steps + val) triggerReward("🏆 MOVEMENT MASTER! Goal crushed! 👟");
     } 
 }
 function resetSteps() { steps = 0; localStorage.setItem('userSteps', 0); updateFitnessUI(); }
@@ -109,28 +104,33 @@ function updateFitnessUI() {
     checkBadges();
 }
 
-// STUDY BUDDY
+// Study Buddy
 function startQuiz() {
-    if(document.getElementById('notes-input').value.length < 5) return alert("Paste your notes first!");
+    const n = document.getElementById('notes-input').value.trim();
+    if(n.length < 3) return alert("Paste notes first! 📚");
     document.getElementById('study-initial').style.display = 'none';
-    document.getElementById('quiz-area').style.display = 'block';
-    document.getElementById('question-text').innerText = "AI Question: How does this concept apply to your ECE lab?";
+    document.getElementById('quiz-area').style.display = 'flex';
+    document.getElementById('question-text').innerText = "Question 1: What is the main component used for voltage regulation in an ECE circuit?";
 }
 function checkAnswer() {
-    if(document.getElementById('answer-input').value.trim() !== "") {
+    const userAns = document.getElementById('answer-input').value.toLowerCase().trim();
+    if(userAns.includes("zener") || userAns.includes("regulator") || userAns.includes("nand") || userAns.includes("nor")) {
         quizScore++;
         document.getElementById('quiz-score').innerText = quizScore;
-        document.getElementById('answer-input').value = "";
         alert("Correct! ⭐");
-        if(quizScore === 3) triggerReward("📚 BRAIN POWER! You've earned the Study Star!");
-        checkBadges();
+        if(quizScore === 3) triggerReward("📚 STUDY STAR UNLOCKED! Brain power activated!");
+        if (quizScore === 1) document.getElementById('question-text').innerText = "Question 2: Which logic gate is known as the 'Universal Gate'?";
+        else if (quizScore === 2) document.getElementById('question-text').innerText = "Question 3: In Computer Vision, what does 'YOLO' stand for?";
+        document.getElementById('answer-input').value = "";
+    } else {
+        alert("Not quite! Try again. 🧸");
     }
 }
 
-// VISION, DIARY, BREATHE, TIMER (Remains same as before...)
+// Vision, Diary, Breathe, Timer
 function unlockDiary() { if (document.getElementById('diary-pin').value === "1234") { document.getElementById('diary-lock').style.display = 'none'; document.getElementById('diary-open').style.display = 'block'; document.getElementById('diary-input').value = localStorage.getItem('secretNote') || ""; } else { alert("Wrong PIN! 🎀"); } }
 function saveDiary() { localStorage.setItem('secretNote', document.getElementById('diary-input').value); alert("Saved! ✨"); }
 function addImage() { const url = document.getElementById('vision-url').value.trim(); if (url) { let v = JSON.parse(localStorage.getItem('visionImages') || "[]"); v.push(url); localStorage.setItem('visionImages', JSON.stringify(v)); renderVisionBoard(); document.getElementById('vision-url').value = ""; } }
 function renderVisionBoard() { const g = document.getElementById('vision-grid'); if(!g) return; g.innerHTML = ""; JSON.parse(localStorage.getItem('visionImages') || "[]").forEach(url => { const img = document.createElement('img'); img.src = url; img.className = 'vision-img'; g.appendChild(img); }); }
 function startBreathing() { const circle = document.querySelector('.breathe-circle'), text = document.getElementById('breathe-text'), btn = document.getElementById('breathe-btn'); if (breathingInterval) { clearInterval(breathingInterval); breathingInterval = null; circle.classList.remove('breathe-expand'); text.innerText = "Ready?"; btn.innerText = "Start"; return; } btn.innerText = "Stop"; const cycle = () => { text.innerText = "Inhale..."; circle.classList.add('breathe-expand'); setTimeout(() => { text.innerText = "Hold..."; setTimeout(() => { text.innerText = "Exhale..."; circle.classList.remove('breathe-expand'); }, 2000); }, 4000); }; cycle(); breathingInterval = setInterval(cycle, 10000); }
-let timeLeft = 25 * 60, timerId = null; const timerClock = document.getElementById('timer-clock'); const startBtn = document.getElementById('start-timer'); startBtn.onclick = () => { if (timerId) { clearInterval(timerId); timerId = null; startBtn.innerText = "Start"; } else { startBtn.innerText = "Pause"; timerId = setInterval(() => { timeLeft--; let mins = Math.floor(timeLeft / 60), secs = timeLeft % 60; timerClock.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`; if (timeLeft <= 0) { clearInterval(timerId); alert("Break time, Ananya! 🌸"); } }, 1000); } }; document.getElementById('reset-timer').onclick = () => { clearInterval(timerId); timerId = null; timeLeft = 25 * 60; timerClock.innerText = "25:00"; startBtn.innerText = "Start"; };
+let timeLeft = 25 * 60, timerId = null; const timerClock = document.getElementById('timer-clock'); const startBtn = document.getElementById('start-timer'); startBtn.onclick = () => { if (timerId) { clearInterval(timerId); timerId = null; startBtn.innerText = "Start"; } else { startBtn.innerText = "Pause"; timerId = setInterval(() => { timeLeft--; let mins = Math.floor(timeLeft / 60), secs = timeLeft % 60; timerClock.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`; if (timeLeft <= 0) { clearInterval(timerId); alert("Break time! 🌸"); } }, 1000); } }; document.getElementById('reset-timer').onclick = () => { clearInterval(timerId); timerId = null; timeLeft = 25 * 60; timerClock.innerText = "25:00"; startBtn.innerText = "Start"; };
