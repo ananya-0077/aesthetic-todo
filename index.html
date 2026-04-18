@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wellness Sanctuary</title>
+    <title>Ananya's Wellness Sanctuary</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -14,24 +14,24 @@
     </div>
 
     <div class="app-container">
-        <section id="dashboard" class="tab-content active">
-            <header id="main-header">
-                <h1>today's goals ✨</h1>
-                <p id="date-display"></p>
-            </header>
+        <header id="main-header">
+            <h1>today's goals ✨</h1>
+            <p id="date-display"></p>
+        </header>
 
+        <section id="dashboard" class="tab-content active">
             <div id="dashboard-content">
                 <div class="wellness-card">
                     <small>DAILY AFFIRMATION</small>
-                    <p id="affirmation-text">"Everything is falling into place. 🎀"</p>
+                    <p id="affirmation-text">"Loading magic..."</p>
                 </div>
 
                 <div class="input-section">
-                    <input type="text" id="todo-input" placeholder="What's next, Ananya?">
+                    <input type="text" id="todo-input" placeholder="What's the plan?">
                     <button id="add-btn">+</button>
                 </div>
                 
-                <ul id="todo-list" class="task-grid"></ul>
+                <ul id="todo-list"></ul>
             </div>
 
             <div class="feature-grid">
@@ -72,10 +72,10 @@
             <div class="glass-inner">
                 <div id="diary-lock">
                     <input type="password" id="diary-pin" placeholder="PIN" style="width: 80px; text-align: center;">
-                    <button class="main-btn" style="background: #ba68c8; margin-top: 10px;" onclick="unlockDiary()">Unlock</button>
+                    <button class="main-btn" style="background: #ba68c8; margin-top:10px;" onclick="unlockDiary()">Unlock</button>
                 </div>
                 <div id="diary-open" style="display: none; width: 100%;">
-                    <textarea id="diary-input"></textarea>
+                    <textarea id="diary-input" placeholder="Thoughts..."></textarea>
                     <button class="main-btn" style="background: #ba68c8;" onclick="saveDiary()">Save</button>
                 </div>
             </div>
@@ -84,7 +84,7 @@
         <section id="vision-tab" class="tab-content">
             <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
             <div class="glass-inner">
-                <input type="text" id="vision-url" placeholder="Paste image .jpg link...">
+                <input type="text" id="vision-url" placeholder="Paste .jpg link...">
                 <button class="main-btn" style="background: #ffb74d; margin-top: 10px;" onclick="addImage()">Add Image</button>
                 <div id="vision-grid" class="vision-grid"></div>
             </div>
@@ -93,10 +93,8 @@
         <section id="breathe-tab" class="tab-content">
             <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
             <div class="glass-inner">
-                <div class="breathe-container">
-                    <div class="breathe-circle"></div>
-                    <p id="breathe-text">Ready?</p>
-                </div>
+                <div class="breathe-circle"></div>
+                <p id="breathe-text" style="font-weight: 600;">Ready?</p>
                 <button class="main-btn" onclick="startBreathing()" id="breathe-btn" style="background: #90caf9;">Start</button>
             </div>
         </section>
@@ -104,13 +102,13 @@
         <section id="fitness-tab" class="tab-content">
             <button class="back-btn" onclick="showTab('dashboard')">← Back</button>
             <div class="glass-inner">
-                <h2 style="color: #ff7043;">movement log 👟</h2>
+                <h2 style="color: #ff7043; margin-bottom: 10px;">movement log 👟</h2>
                 <div class="progress-container">
                     <div id="step-progress" class="progress-bar"></div>
                 </div>
-                <p><span id="current-steps">0</span> / 10k steps</p>
+                <p style="font-weight: 600;"><span id="current-steps">0</span> / 10,000 steps</p>
                 <div class="input-section" style="margin-top:20px;">
-                    <input type="number" id="step-input" placeholder="Add steps...">
+                    <input type="number" id="step-input" placeholder="Steps...">
                     <button class="main-btn" style="background: #ff7043;" onclick="addSteps()">Add</button>
                 </div>
                 <button class="secondary-btn" onclick="resetSteps()" style="margin-top: 15px;">New Day</button>

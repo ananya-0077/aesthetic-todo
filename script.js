@@ -1,4 +1,4 @@
-const affirmations = ["Ananya, you are doing great! ✨", "Focus on the step, not the mountain. 🏔️", "Everything is falling into place. 🎀"];
+const affirmations = ["I am proud of how far I've come. ✨", "Ananya, you are doing great! 🎀", "Focus on the step, not the mountain. 🏔️"];
 const plants = ["🌱", "🌿", "🪴", "🍀", "🌳", "🌻", "🌈"];
 let breathingInterval = null;
 
@@ -21,14 +21,14 @@ function showTab(tabId) {
     else { head.style.display = 'none'; dash.style.display = 'none'; }
 }
 
-// Tasks
+// Tasks (Side-by-Side)
 const tInput = document.getElementById('todo-input');
 document.getElementById('add-btn').onclick = () => {
     if (tInput.value.trim()) { createTask(tInput.value); saveTasks(); tInput.value = ""; }
 };
 function createTask(text, completed = false) {
     const li = document.createElement('li');
-    li.innerHTML = `<span style="${completed ? 'text-decoration:line-through; opacity:0.5' : ''}">${text}</span><span style="opacity:0.2">☁️</span>`;
+    li.innerHTML = `<span style="${completed ? 'text-decoration:line-through; opacity:0.5' : ''}">${text}</span><span style="opacity:0.2">✨</span>`;
     li.onclick = () => {
         const s = li.querySelector('span');
         s.style.textDecoration = s.style.textDecoration === 'line-through' ? 'none' : 'line-through';
@@ -44,6 +44,20 @@ function saveTasks() {
 }
 function loadTasks() { JSON.parse(localStorage.getItem('tasks') || "[]").forEach(t => createTask(t.text, t.completed)); }
 
+// Fitness Logic
+let steps = parseInt(localStorage.getItem('userSteps')) || 0;
+function addSteps() {
+    const sInput = document.getElementById('step-input');
+    const val = parseInt(sInput.value);
+    if (val > 0) { steps += val; updateFitnessUI(); localStorage.setItem('userSteps', steps); sInput.value = ""; }
+}
+function resetSteps() { steps = 0; updateFitnessUI(); localStorage.setItem('userSteps', 0); }
+function updateFitnessUI() {
+    if(document.getElementById('current-steps')) document.getElementById('current-steps').innerText = steps.toLocaleString();
+    const bar = document.getElementById('step-progress');
+    if(bar) bar.style.width = Math.min((steps / 10000) * 100, 100) + "%";
+}
+
 // Timer
 let timeLeft = 25 * 60, timerId = null;
 const timerClock = document.getElementById('timer-clock');
@@ -54,7 +68,7 @@ startBtn.onclick = () => {
         timeLeft--;
         let mins = Math.floor(timeLeft / 60), secs = timeLeft % 60;
         timerClock.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        if (timeLeft <= 0) { clearInterval(timerId); alert("Break time! 🌸"); }
+        if (timeLeft <= 0) { clearInterval(timerId); alert("Time for a break, Ananya! 🌸"); }
     }, 1000); }
 };
 document.getElementById('reset-timer').onclick = () => { clearInterval(timerId); timerId = null; timeLeft = 25 * 60; timerClock.innerText = "25:00"; startBtn.innerText = "Start"; };
@@ -119,16 +133,4 @@ function startBreathing() {
         }, 4000);
     };
     cycle(); breathingInterval = setInterval(cycle, 10000);
-}
-
-// Fitness
-let steps = parseInt(localStorage.getItem('userSteps')) || 0;
-function addSteps() {
-    const sInput = document.getElementById('step-input');
-    if (parseInt(sInput.value) > 0) { steps += parseInt(sInput.value); updateFitnessUI(); localStorage.setItem('userSteps', steps); sInput.value = ""; }
-}
-function resetSteps() { steps = 0; updateFitnessUI(); localStorage.setItem('userSteps', 0); }
-function updateFitnessUI() {
-    if(document.getElementById('current-steps')) document.getElementById('current-steps').innerText = steps.toLocaleString();
-    if(document.getElementById('step-progress')) document.getElementById('step-progress').style.width = Math.min((steps / 10000) * 100, 100) + "%";
 }
