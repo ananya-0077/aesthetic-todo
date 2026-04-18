@@ -9,6 +9,7 @@ window.onload = () => {
     loadTasks();
     updateWaterUI();
     renderVisionBoard();
+    updateFitnessUI();
 };
 
 function showTab(tabId) {
@@ -136,3 +137,43 @@ function startBreathing() {
     };
     cycle(); breathingInterval = setInterval(cycle, 10000);
 }
+// --- Feature 6: Fitness Logic ---
+let steps = parseInt(localStorage.getItem('userSteps')) || 0;
+const stepGoal = 10000;
+
+function addSteps() {
+    const input = document.getElementById('step-input');
+    const amount = parseInt(input.value);
+    
+    if (amount > 0) {
+        steps += amount;
+        updateFitnessUI();
+        localStorage.setItem('userSteps', steps);
+        input.value = "";
+    }
+}
+
+function resetSteps() {
+    if(confirm("Start a new fitness day?")) {
+        steps = 0;
+        updateFitnessUI();
+        localStorage.setItem('userSteps', 0);
+    }
+}
+
+function updateFitnessUI() {
+    const stepText = document.getElementById('current-steps');
+    const bar = document.getElementById('step-progress');
+    
+    if(stepText && bar) {
+        stepText.innerText = steps.toLocaleString();
+        let percentage = Math.min((steps / stepGoal) * 100, 100);
+        bar.style.width = percentage + "%";
+        
+        if (steps >= stepGoal) {
+            stepText.style.color = "#4db6ac"; // Turns green when goal met
+        }
+    }
+}
+
+// Add 'updateFitnessUI();' to your window.onload function at the top!
